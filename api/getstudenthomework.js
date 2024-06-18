@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axiosInstance from "./axiosinstance";
-const getstudenthomework = async (token) => {
+const getstudenthomework = async () => {
+  const token = await AsyncStorage.getItem("token");
   const headers = {
     authorization: `Bearer ${token}`,
   };
@@ -12,8 +13,8 @@ const getstudenthomework = async (token) => {
     return response.data;
   } catch (error) {
     console.log(error);
-   
-   
+
+
     return null;
   }
 };

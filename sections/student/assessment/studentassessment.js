@@ -15,6 +15,8 @@ import getassessment from "../../../api/getassessment";
 import clsx from "clsx";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
 import Notavailable from "../../../assets/icons/notavailable";
+import { useRoute } from "@react-navigation/native";
+import getStudentassessmentteacher from "../../../api/getstudentassessmentteacher";
 
 
 const Studentassessment = ({ }) => {
@@ -25,13 +27,25 @@ const Studentassessment = ({ }) => {
     const [date, setdate] = useState();
     const [pageload, setpageload] = useState(true);
     const [subjectAssignments, setsubjectAssignments] = useState();
+    const route = useRoute()
+    const { id } = route.params;
     useEffect(() => {
         setdate(getFormattedDate());
         const getAssignmentBySubject = async () => {
-            const data = await getassessment();
-            console.log(data);
-            setsubjectAssignments(data);
-            setpageload(false);
+            if (user.usertype == "student") {
+
+                const data = await getassessment();
+
+                setsubjectAssignments(data);
+                setpageload(false);
+            }
+            else if (user.usertype == "teacher") {
+                const data = await getStudentassessmentteacher(id);
+                setsubjectAssignments(data);
+                setpageload(false);
+            }
+
+
         };
         getAssignmentBySubject();
     }, [user]);
@@ -167,7 +181,7 @@ const Studentassessment = ({ }) => {
                                                                 field="Total Score:"
                                                                 details={item.totalAssessmentScore}
                                                             />
-                                                            <View
+                                                            {user.usertype == "student" && <View
                                                                 className={`flex-row  py-[16px] pr-3 justify-end`}
                                                             >
                                                                 <TouchableOpacity
@@ -188,7 +202,8 @@ const Studentassessment = ({ }) => {
                                                                         Attempt now
                                                                     </Text>
                                                                 </TouchableOpacity>
-                                                            </View>
+                                                            </View>}
+
                                                         </View>
                                                     ))}
                                                 </ScrollView>
@@ -279,6 +294,7 @@ const Studentassessment = ({ }) => {
                                                 <View
                                                     className={`flex-1 justify-center py-[160px] items-center`}
                                                 >
+
                                                     <TouchableOpacity
                                                         onPress={() => setActiveTab("pending")}
                                                         className={`bg-[#205FFF] w-[150px] py-4 pb-[20px]  rounded-full items-center min-h-[50px]`}

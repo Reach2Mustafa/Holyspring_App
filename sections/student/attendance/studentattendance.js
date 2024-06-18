@@ -7,6 +7,8 @@ import getFormattedDate from "../../../utils/getFormattedDate";
 import getstudentattendence from "../../../api/getstudentattendence";
 import Assbtn from "../../../assets/icons/assbtn";
 import clsx from "clsx";
+import { useRoute } from "@react-navigation/native";
+import getStudentattendanceteacher from "../../../api/getStudentattendanceteacher";
 
 
 
@@ -18,17 +20,27 @@ const Studentattendance = ({ }) => {
     const [currentpage, setCurrentPage] = useState(0); // State to track the current page
     const { state } = useUser();
     const user = state.user;
+    const route = useRoute()
+    const { id } = route.params;
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getstudentattendence();
-            setAttendence(data);
+            if (user.usertype == "student") {
+
+                const data = await getstudentattendence();
+                setAttendence(data);
+            }
+            else if (user.usertype == "teacher") {
+                const data = await getStudentattendanceteacher(id);
+                setAttendence(data);
+            }
+
             setLoading(false);
         };
         if (user) {
             getData();
         }
-    }, [user]);
+    }, [user, id]);
 
     const processDate = (dateString) => {
         const date = new Date(dateString);

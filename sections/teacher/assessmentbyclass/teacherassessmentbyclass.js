@@ -142,6 +142,11 @@ const Teacherassessmentbyclass = ({ }) => {
                                                         field="Assigned time:"
                                                         details={formatDateAndDay(item?.updatedAt).time}
                                                     />
+                                                    <Card
+                                                        bg={true}
+                                                        field="Total Score:"
+                                                        details={item.assesments.length}
+                                                    />
 
                                                 </TouchableOpacity>
                                             ))}

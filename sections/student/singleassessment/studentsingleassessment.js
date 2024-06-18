@@ -113,7 +113,9 @@ const Studentsingleassessment = ({ }) => {
 
             await getScoreForAssessment(selectedOption)
             ToastAndroid.show('Submitted successfully!', ToastAndroid.SHORT);
-            navigation.navigate("student/assessment")
+            navigation.navigate("student/assessment", {
+                id: "dummy",
+            })
         }
 
         setLoading(false)
