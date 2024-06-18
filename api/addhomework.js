@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axiosInstance from "./axiosinstance";
 
-const addHomework = async (standard, subject, description, file) => {
+const addhomeworkteacher = async (standard, subject, description, file) => {
   try {
     console.log(file);
     // Retrieve the user's token from AsyncStorage
@@ -45,4 +45,4 @@ const addHomework = async (standard, subject, description, file) => {
   }
 };
 
-export default addHomework;
+export default addhomeworkteacher;

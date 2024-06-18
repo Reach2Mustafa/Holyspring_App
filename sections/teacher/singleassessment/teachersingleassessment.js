@@ -23,7 +23,9 @@ import getScoreForAssessment from "../../../api/getScoreForAssessment";
 import ArrowRight from "../../../assets/icons/arrowright";
 import ArrowLeft from "../../../assets/icons/arrowleft";
 import Assbtn from "../../../assets/icons/assbtn";
-const Studentsingleassessment = ({ }) => {
+import getassessmentbyIdteacher from "../../../api/getassessmentbyIdteacher";
+import deleteassessmentbyId from "../../../api/deleteassessmentbyId";
+const Teachersingleassessment = ({ }) => {
     const pagerRef = useRef(null);
     const [currentpage, setCurrentPage] = useState(0); // State to track the current page
     const [loading, setLoading] = useState(false);
@@ -71,7 +73,7 @@ const Studentsingleassessment = ({ }) => {
     useEffect(() => {
         setdate(getFormattedDate());
         const data = async () => {
-            const d = await getassessmentbyId(id);
+            const d = await getassessmentbyIdteacher(id);
             setdetails(d);
             setpageload(false);
         };
@@ -79,45 +81,10 @@ const Studentsingleassessment = ({ }) => {
             data();
         }
     }, [user, id]);
-    const handleOptionChange = (sno, selectedAnswer) => {
-        setSelectedOption((prevSelectedOption) => {
-            const existingAnswerIndex = prevSelectedOption.answers.findIndex(
-                (answer) => Number(answer.sno) === Number(sno)
-            );
-
-            // If sno is not present in answers array, push it
-            if (existingAnswerIndex === -1) {
-                return {
-                    ...prevSelectedOption,
-                    answers: [
-                        ...prevSelectedOption.answers,
-                        { sno: Number(sno), answer: selectedAnswer },
-                    ],
-                };
-            } else {
-                // Replace the existing answer if sno is already present
-                const newAnswers = [...prevSelectedOption.answers];
-                newAnswers[existingAnswerIndex] = { sno: Number(sno), answer: selectedAnswer };
-                return { ...prevSelectedOption, answers: newAnswers };
-            }
-        });
-    };
 
 
-    useEffect(() => {
-        console.log(selectedOption);
-    }, [selectedOption]);
-    const Submit = async () => {
-        setLoading(true)
-        if (!loading && (currentpage == details?.questions.length - 1)) {
 
-            await getScoreForAssessment(selectedOption)
-            ToastAndroid.show('Submitted successfully!', ToastAndroid.SHORT);
-            navigation.navigate("student/assessment")
-        }
 
-        setLoading(false)
-    }
     useEffect(() => {
         if (details) {
             const length = details?.questions.length;
@@ -125,7 +92,18 @@ const Studentsingleassessment = ({ }) => {
             setscrollprogress(p);
         }
     }, [details]);
+    const deleteassessment = async () => {
+        const data = await deleteassessmentbyId(id)
+        if (!data.error) {
+            ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
 
+            navigation.navigate("/teacher/home");
+        }
+        else {
+            ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+        }
+    }
     return (
         <View className={`flex-1  h-full`}>
             {pageload ? (
@@ -133,7 +111,7 @@ const Studentsingleassessment = ({ }) => {
                     <ActivityIndicator size="large" color="#0000ff" />
                 </View>
             ) : (
-                <ScrollView className={` `}>
+                details && <ScrollView className={` `}>
                     <View className={`flex-1  `}>
                         <View className={`w-full border-b border-gray-300`}>
                             <View className={`p-6`}>
@@ -201,18 +179,15 @@ const Studentsingleassessment = ({ }) => {
                                                 {question.options.map((option, index) => (
                                                     <TouchableOpacity
                                                         key={index}
-                                                        onPress={() =>
-                                                            handleOptionChange(questionIndex + 1, option)
-                                                        }
-                                                        className={clsx("text-[0.95rem]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", selectedOption?.answers[questionIndex]?.answer ===
-                                                            option // Corrected access to selectedOption
-                                                            ? `border-[#205FFF] bg-[#205FFF] text-white`
+
+                                                        className={clsx("text-[0.95rem]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", question.correctAnswer == option
+
+                                                            ? `border-[#25D188] bg-[#25D188] text-white`
                                                             : `border-[#E2E4E8] bg-white text-[#373737]`,)}
 
                                                     >
                                                         <Text
-                                                            className={clsx(selectedOption?.answers[questionIndex]
-                                                                ?.answer === option
+                                                            className={clsx(question.correctAnswer == option
                                                                 ? `text-white`
                                                                 : `text-[#373737]`)}
                                                             style={{
@@ -233,19 +208,23 @@ const Studentsingleassessment = ({ }) => {
                     </View>
 
                 </ScrollView>
+
             )}
-            <View className="px-4 pb-4">
+            {details?.questions && <View className="px-4 pb-4">
 
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
+                    {details.teacher == user._id ?
+                        <TouchableOpacity
+                            onPress={() => { deleteassessment() }}
+                            className={clsx(" rounded-full w-[80px] flex items-center bg-[#F42F52] ",)}
 
-                    <TouchableOpacity
-                        onPress={() => { Submit() }}
-                        className={clsx(" rounded-full w-[80px] flex items-center ", currentpage === details?.questions.length - 1 ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
+                        >
+                            <Text style={{ fontFamily: "Matter500" }} className={`text-white leading-none text-[14px]   py-2.5 pb-[14px] font-medium`}>
+                                {loading ? <ActivityIndicator color={"#fff"} /> : "Delete"}</Text>
+                        </TouchableOpacity> : <Text />
 
-                    >
-                        <Text style={{ fontFamily: "Matter500" }} className={`text-white leading-none text-[14px]   py-2.5 pb-[14px] font-medium`}>
-                            {loading ? <ActivityIndicator color={"#fff"} /> : "Submit"}</Text>
-                    </TouchableOpacity>
+                    }
+
                     {/* <View className=" h-[4px] w-[50px] bg-[#D9D9D9] rounded-full mt-1 ">
                         <View
                             style={{ width: `${scrollprogress}%` }}
@@ -270,7 +249,8 @@ const Studentsingleassessment = ({ }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </View>}
+
         </View>
     );
 };
@@ -287,4 +267,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Studentsingleassessment;
+export default Teachersingleassessment;

@@ -1,14 +1,9 @@
 import 'react-native-reanimated'
 import 'react-native-gesture-handler'
 import NetInfo from "@react-native-community/netinfo";
-import { StatusBar } from 'expo-status-bar';
 import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import "../public/fonts/Avant/stylesheet.css";
-import "../public/fonts/polysans/stylesheet.css";
-import "../public/fonts/matter/stylesheet.css";
 import "./global.css"
 import { useFonts } from 'expo-font';
-import Hero from '../sections/hero';
 import { Slot, usePathname } from 'expo-router';
 import { UserProvider } from '../redux/userContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,7 +11,7 @@ import Menu from '../components/menu';
 import { useEffect, useState } from 'react';
 import App from '../App';
 import HamburgerMenu from '../assets/icons/hamburger';
-// import HamburgerMenu from '../assets/icons/hamburger';
+
 
 export default function _layout() {
     const [fontsLoaded] = useFonts({
@@ -78,7 +73,7 @@ export default function _layout() {
                         <>
                             <App />
                             <View style={{ flex: 1 }}>
-                                <View className="pt-12 flex-1">
+                                <View className="pt-11 flex-1">
 
                                     <Slot />
                                 </View>

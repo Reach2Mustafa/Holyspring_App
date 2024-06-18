@@ -110,21 +110,24 @@ const Menu = ({ toggleDrawer }) => {
           </View>
           <View className={`w-full`}>
             <TouchableOpacity
-              className={`rounded-md w-full justify-center relative border-[1px] py-3.5 pb-4 border-[#FC6C6C]`}
+              className={`rounded-md w-full justify-center border-[1px] py-2.5 pb-3.5 border-[#FC6C6C]`}
               onPress={() => { handleLogout() }}
             >
-              <View className={`flex flex-row   gap-2 items-center`}>
+              <View className={`flex flex-row justify-center gap-2 items-center`}>
                 {/* Replace Door with the SVG component */}
-                <Logout />
+                <Text>
+
+                  <Logout />
+                </Text>
+                <Text className="text-[#FC6C6C] text-[16px] uppercase font-medium" style={{ fontFamily: "Matter500" }}>Logout</Text>
               </View>
-              <Text className="text-[#FC6C6C] uppercase absolute  leading-none ab" style={{ fontFamily: "Matter500" }}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View> :
           <View className=" flex h-full py-[32px] px-[16px] flex-col justify-between">
 
             <View className="flex flex-col gap-[16px] ">
-              <Link href={"/teacherhome"}>
+              <Link href={"/teacher/home"}>
 
                 <View className="flex flex-row   items-center gap-2 ">
                   <View>
@@ -145,7 +148,7 @@ const Menu = ({ toggleDrawer }) => {
                   </Text>
                 </View>
               </Link>
-              <Link href={"/teacher/addassessment"}>
+              <Link href={"/teacher/assessment"}>
                 <View className="flex flex-row   items-center gap-2 ">
                   <View>
                     <Assessment />
@@ -182,11 +185,11 @@ const Menu = ({ toggleDrawer }) => {
                   key={index}
                   onPress={() => { navigation.navigate("chat", { group: classItem }) }}>
 
-                  <View style={tw`flex flex-row items-center gap-2`}>
+                  <View className={`flex flex-row items-center gap-2`}>
                     <View>
                       <Chat />
                     </View>
-                    <Text style={{ ...tw`text-[1.2rem]`, fontFamily: 'Matter500' }}>
+                    <Text className=" text-[19.2px]" style={{ fontFamily: 'Matter500' }}>
                       Chat- {classItem}
                     </Text>
                   </View>
@@ -207,13 +210,16 @@ const Menu = ({ toggleDrawer }) => {
             </View>
             <View className={`w-full`}>
               <TouchableOpacity
-                className={`rounded-md w-full justify-center border-[1px] py-2.5 border-[#FC6C6C]`}
+                className={`rounded-md w-full justify-center border-[1px] py-2.5 pb-3.5 border-[#FC6C6C]`}
                 onPress={() => { handleLogout() }}
               >
                 <View className={`flex flex-row justify-center gap-2 items-center`}>
                   {/* Replace Door with the SVG component */}
-                  <Logout />
-                  <Text className="text-[#FC6C6C] text-[16px] uppercase font-medium" style={{ fontFamily: "Matter500", color: "#16191D" }}>Logout</Text>
+                  <Text>
+
+                    <Logout />
+                  </Text>
+                  <Text className="text-[#FC6C6C] text-[16px] uppercase font-medium" style={{ fontFamily: "Matter500" }}>Logout</Text>
                 </View>
               </TouchableOpacity>
             </View>

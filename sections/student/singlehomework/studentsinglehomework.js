@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     View,
     Text,
@@ -10,6 +10,8 @@ import {
     Image,
     ScrollView,
     Modal,
+    TextInput,
+    ToastAndroid,
 } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
@@ -19,7 +21,12 @@ import gethomeworkbyId from "../../../api/gethomeworkbyId";
 import clsx from "clsx";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
 import { IMAGE_BASE_URL } from "../../../api/variables";
-
+import gethomeworkbyIdteacher from "../../../api/gethomeworkbyidteacher";
+import Edithomeworkteacher from "../../../api/Edithomeworkteacher";
+import deletehomeworkbyId from "../../../api/deletehomeworkteacher";
+import Edit from "../../../assets/icons/edit";
+import Save from "../../../assets/icons/save";
+import Delete from "../../../assets/icons/delete";
 
 const Card = ({ field, details, bg }) => {
     return (
@@ -33,7 +40,9 @@ const Studentsinglehomework = ({ }) => {
     const [pageload, setPageload] = useState(true); // Corrected useState typo
     const [details, setdetails] = useState();
     const { state } = useUser();
-
+    const [description, setDescription] = useState();
+    const [edit, setedit] = useState(false);
+    const ref = useRef()
 
     const user = state.user;
     const [date, setdate] = useState();
@@ -50,18 +59,61 @@ const Studentsinglehomework = ({ }) => {
         }
     };
     useEffect(() => {
+        if (edit && ref.current) {
+            ref.current.focus();
+        }
+    }, [edit]);
+    useEffect(() => {
         const assignment = async () => {
             setdate(getFormattedDate());
             if (id != null) {
-                const data = await gethomeworkbyId(id);
+                if (user.usertype == "student") {
 
-                setdetails(data);
+                    const data = await gethomeworkbyId(id);
+                    setDescription(data?.description)
+                    setdetails(data);
+                }
+                else if (user.usertype == "teacher") {
+                    const data = await gethomeworkbyIdteacher(id)
+                    setdetails(data);
+                    setDescription(data?.description)
+                }
 
                 setPageload(false);
             }
         };
         assignment();
     }, [id]);
+    const editting = async () => {
+        if (description) {
+            const data = await Edithomeworkteacher(id, description)
+            if (!data.error) {
+                setdetails(data);
+                setedit(false)
+                ToastAndroid.show("Homework Updated", ToastAndroid.SHORT);
+            }
+            else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+            }
+
+        }
+        else {
+            ToastAndroid.show("Invalid Description", ToastAndroid.SHORT);
+        }
+    }
+    const Delete1 = async () => {
+        const data = await deletehomeworkbyId(id)
+        if (!data.error) {
+            ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
+
+            navigation.navigate("/teacher/home");
+        }
+        else {
+            ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+        }
+    }
     return (
         <View className={`flex-1 `}>
             {pageload ? (
@@ -87,11 +139,45 @@ const Studentsinglehomework = ({ }) => {
                             <View
                                 className={`border border-gray-300 my-6 rounded-xl overflow-hidden`}
                             >
-                                <Card
-                                    field="Description:"
-                                    details={details?.description}
-                                    bg={true}
-                                />
+
+                                <View className={`flex-row w-full px-6 py-6 bg-[#F9FBFC]`}>
+                                    <Text
+                                        className="w-32 text-[#737A82] font-medium text-[16px]"
+                                        style={{
+
+                                            fontFamily: 'Matter500',
+                                            wordBreak: 'break-word',
+                                        }}
+                                    >
+                                        Description
+                                    </Text>
+                                    {edit ? (
+                                        <TextInput
+                                            ref={ref}
+                                            className="text-[16px] h-max w-[60%]"
+                                            style={{
+                                                fontFamily: 'Matter',
+                                                wordBreak: 'break-word',
+
+
+                                            }}
+                                            multiline={true}
+                                            value={description}
+                                            onChangeText={setDescription}
+                                        />
+                                    ) : (
+                                        <Text
+                                            className="text-[16px] w-[60%]"
+                                            style={{
+                                                fontFamily: 'Matter',
+                                                wordBreak: 'break-word',
+
+                                            }}
+                                        >
+                                            {details?.description}
+                                        </Text>
+                                    )}
+                                </View>
                                 <Card field="Subject:" details={details?.subject} />
                                 <Card
                                     field="Class:"
@@ -140,7 +226,34 @@ const Studentsinglehomework = ({ }) => {
                         </View>
                     </View>
                 </ScrollView>
+
             )}
+            {user.usertype == "teacher" && user._id == details?.teacher?._id && <View className="px-4 pb-4">
+
+                <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
+
+
+                    <TouchableOpacity onPress={() => { Delete1() }}><Delete /></TouchableOpacity>
+
+                    {
+                        edit ?
+                            <View className={` flex items-center flex-row gap-4`}>
+
+                                <TouchableOpacity className={` `} onPress={() => { setedit(false) }}>
+                                    <Text className={`text-[16px] text-[#F42F4E] underline `} style={{ fontFamily: "Matter500" }}>Abort</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { editting() }}><Save /></TouchableOpacity>
+                            </View>
+                            :
+                            <TouchableOpacity onPress={() => { setedit(true) }}><Edit /></TouchableOpacity>
+
+                    }
+
+
+                </View>
+            </View>}
+
         </View>
     );
 };

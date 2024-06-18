@@ -33,7 +33,7 @@ const Login = () => {
                     navigation.navigate("student/home");
                 }
                 else if (user.usertype == "teacher") {
-                    navigation.navigate("teacherhome");
+                    navigation.navigate("teacher/home");
                 }
             } else if (!user && token == null) {
                 setpageload(false);
@@ -128,7 +128,7 @@ const Login = () => {
                     >
                         <Text
                             className="pt-4 pb-[32px] text-[#252525] font-bold text-2xl text-center}"
-                            style={{ fontFamily: "Inter-Black" }}
+                            style={{ fontFamily: "Matter" }}
                         >
                             Login
                         </Text>
@@ -144,7 +144,7 @@ const Login = () => {
                                 className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
                                     : `border-[#EDEEF4]`,)}
                                 style={{
-                                    fontSize: 16, fontFamily: "Inter-Black", // Set the font size explicitly
+                                    fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
                                 }}
                                 placeholder="Email"
                                 keyboardType="email-address"
@@ -166,7 +166,7 @@ const Login = () => {
                                     className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF]  w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 3 ? `border-[#F42F4E]`
                                         : `border-[#EDEEF4]`,)}
                                     style={{
-                                        fontSize: 16, fontFamily: "Inter-Black", // Set the font size explicitly
+                                        fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
                                     }}
                                     placeholder="Password"
                                     secureTextEntry={!showPassword}

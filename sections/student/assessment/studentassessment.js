@@ -62,7 +62,7 @@ const Studentassessment = ({ }) => {
                                         fontFeatures: [{ salt: 1 }],
                                         textTransform: "uppercase",
                                         fontWeight: "bold",
-                                        fontSize: 40,
+                                        fontSize: 20,
                                     }}
                                 >
                                     Assessment

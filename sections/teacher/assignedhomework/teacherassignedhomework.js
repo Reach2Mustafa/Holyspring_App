@@ -11,23 +11,29 @@ import getFormattedDate from "../../../utils/getFormattedDate";
 import getstudenthomework from "../../../api/getstudenthomework";
 import clsx from "clsx";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
+import { useRoute } from "@react-navigation/native";
+import gethomeworkbyclass from "../../../api/gethomeworkbyclass";
+import getassignedhomework from "../../../api/getassignedhomework";
 
 
 
-const Studenthomework = ({ }) => {
+const Teacherassignedhomework = ({ }) => {
     const { state } = useUser();
 
     const navigation = useNavigation();
     const user = state.user;
     const [date, setdate] = useState();
     const [pageload, setpageload] = useState(true);
+    const route = useRoute();
+
+    const { class1 } = route.params;
     const [subjectAssignments, setsubjectAssignments] = useState();
     useEffect(() => {
         setdate(getFormattedDate());
         const getHomework = async () => {
             const token = await AsyncStorage.getItem("token");
 
-            const data = await getstudenthomework(token);
+            const data = await getassignedhomework();
             console.log(data);
             setsubjectAssignments(data);
             setpageload(false);
@@ -54,7 +60,7 @@ const Studenthomework = ({ }) => {
                         <View className={`w-full border-b border-gray-300`}>
                             <View className={`p-6`}>
                                 <Text className=" leading-none" style={{ fontFamily: "Avant", textTransform: "uppercase", fontSize: 20 }}>
-                                    Homework
+                                    Assigned  Homework
                                 </Text>
 
                                 <Text className={"text-gray-600 text-base"} style={{ fontFamily: "Matter" }}>{date}</Text>
@@ -149,7 +155,7 @@ const Studenthomework = ({ }) => {
 
 
 
-export default Studenthomework;
+export default Teacherassignedhomework;
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
