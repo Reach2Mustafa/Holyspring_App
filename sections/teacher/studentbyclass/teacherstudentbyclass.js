@@ -17,6 +17,7 @@ import getstudentsbystandard from "../../../api/getstudentsbystandard";
 import Attendence from "../../../assets/icons/attendence";
 import Assessment from "../../../assets/icons/assessment";
 import Remark from "../../../assets/icons/remark";
+import Search from "../../../assets/icons/search";
 
 const Card = ({ field, details, bg }) => {
     return (
@@ -84,14 +85,19 @@ const Teacherstudentbyclass = ({ }) => {
                             </View>
                         </View>
                         <View className="px-6 pt-6">
+                            <View className="  relative">
 
-                            <TextInput
+                                <TextInput
 
-                                placeholder="Search by name"
-                                value={searchQuery}
-                                onChangeText={setSearchQuery}
-                                className="p-2  border border-gray-300 bg-[#F9FBFC] rounded-xl focus:border-[#205FFF] focus:outline-[#205FFF]"
-                            />
+                                    placeholder="Search by name"
+                                    value={searchQuery}
+                                    onChangeText={setSearchQuery}
+                                    className="py-2 pl-8  border caret-black border-gray-300 bg-[#F9FBFC] rounded-xl focus:border-[#205FFF] focus:outline-[#205FFF]"
+                                />
+                                <View className="absolute left-2 h-full flex justify-center ">
+                                    <Search />
+                                </View>
+                            </View>
                         </View>
 
                         <View className={`flex-1 pt-4 px-4 pb-4`}>
