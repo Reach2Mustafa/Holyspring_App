@@ -159,6 +159,7 @@ const Teacherstudentbyclass = ({}) => {
                           onPress={() => {
                             navigation.navigate("student/attendence", {
                               id: item._id,
+                              student: item.name,
                             });
                           }}
                           className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
@@ -182,6 +183,7 @@ const Teacherstudentbyclass = ({}) => {
                           onPress={() => {
                             navigation.navigate("student/assessment", {
                               id: item._id,
+                              student: item.name,
                             });
                           }}
                           className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
@@ -205,6 +207,7 @@ const Teacherstudentbyclass = ({}) => {
                           onPress={() => {
                             navigation.navigate("student/remark", {
                               id: item._id,
+                              student: item.name,
                             });
                           }}
                           className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
