@@ -39,7 +39,7 @@ const Card = ({ field, details, bg }) => {
         {field}
       </Text>
       <Text
-        className="text-[16px] w-[60%]"
+        className="text-[16px] w-[60%] leading-5"
         style={{ fontFamily: "Matter", wordBreak: "break-word" }}
       >
         {details}
