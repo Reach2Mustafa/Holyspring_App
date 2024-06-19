@@ -193,6 +193,7 @@ const Teacheraddassessment = ({ }) => {
 
             return;
         }
+        setloading(true);
         const data = await postAssessment(class1, subject, title, questions)
         if (data.error) {
             setloading(false)
@@ -570,14 +571,7 @@ const Teacheraddassessment = ({ }) => {
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
 
                     <View className=" flex  gap-4 flex-row">
-                        <TouchableOpacity
-                            onPress={() => { if (questions.length == currentindex) { Submit() } else { ToastAndroid.show("Go to last Question to submit", ToastAndroid.SHORT) } }}
-                            className={clsx(" rounded-full w-[80px] flex items-center ", questions.length == currentindex ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
 
-                        >
-                            <Text style={{ fontFamily: "Matter500" }} className={`text-white leading-none text-[14px]   py-2.5 pb-[14.5px] font-medium`}>
-                                {loading ? <ActivityIndicator color={"#fff"} /> : "Upload"}</Text>
-                        </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={() => {
@@ -607,14 +601,21 @@ const Teacheraddassessment = ({ }) => {
 
                                 }
                             }}
-                            className={clsx(" rounded-full w-[80px] flex items-center ", questions.length == currentindex ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
+                            className={clsx(" rounded-full w-[120px] flex items-center ", questions.length == currentindex ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
 
                         >
                             <Text style={{ fontFamily: "Matter500" }} className={`text-white leading-none text-[14px]   py-2.5 pb-[14px] font-medium`}>
-                                Add</Text>
+                                Add Question</Text>
                         </TouchableOpacity>
 
+                        <TouchableOpacity
+                            onPress={() => { if (questions.length == currentindex) { Submit() } else { ToastAndroid.show("Go to last Question to submit", ToastAndroid.SHORT) } }}
+                            className={clsx(" rounded-full w-[80px] flex items-center ", questions.length == currentindex ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
 
+                        >
+                            <Text style={{ fontFamily: "Matter500" }} className={`text-white leading-none text-[14px]   py-2.5 pb-[14.5px] font-medium`}>
+                                {loading ? <ActivityIndicator color={"#fff"} /> : "Upload"}</Text>
+                        </TouchableOpacity>
 
                     </View>
                     <View className=" flex  gap-4 flex-row">

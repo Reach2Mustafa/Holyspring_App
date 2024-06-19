@@ -44,7 +44,7 @@ const Dashboard = ({ }) => {
 
                                     }}
                                 >
-                                    Teacher Name::
+                                    Teacher Name:
                                 </Text>
                                 <View className={`flex flex-row gap-2 items-end`}>
 

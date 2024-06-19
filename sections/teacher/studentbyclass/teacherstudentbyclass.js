@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator, TouchableOpacity, ScrollView, TextInput } from "react-native";
 
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,6 +29,8 @@ const Card = ({ field, details, bg }) => {
 
 const Teacherstudentbyclass = ({ }) => {
     const { state } = useUser();
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     const navigation = useNavigation();
     const user = state.user;
@@ -57,6 +59,10 @@ const Teacherstudentbyclass = ({ }) => {
     const navigate = async () => {
 
     }
+
+    const filteredAssignments = subjectAssignments?.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     return (
         <View className={`flex-1  h-full`}>
             {pageload ? (
@@ -77,17 +83,26 @@ const Teacherstudentbyclass = ({ }) => {
 
                             </View>
                         </View>
+                        <View className="px-6 pt-6">
 
+                            <TextInput
 
-                        <View className={`flex-1 pt-8 px-4 pb-4`}>
-                            {subjectAssignments &&
-                                subjectAssignments.length > 0 ? (
+                                placeholder="Search by name"
+                                value={searchQuery}
+                                onChangeText={setSearchQuery}
+                                className="p-2  border border-gray-300 bg-[#F9FBFC] rounded-xl focus:border-[#205FFF] focus:outline-[#205FFF]"
+                            />
+                        </View>
+
+                        <View className={`flex-1 pt-4 px-4 pb-4`}>
+                            {filteredAssignments &&
+                                filteredAssignments.length > 0 ? (
                                 <ScrollView className={`flex-col gap-8 flex py-4 `}>
-                                    {subjectAssignments.map((item, index) => (
+                                    {filteredAssignments.map((item, index) => (
                                         <View
                                             key={item._id}
                                             className={clsx("flex   text-[#000000] overflow-hidden", index ===
-                                                subjectAssignments.length - 1 &&
+                                                filteredAssignments.length - 1 &&
                                                 `rounded-xl border-2 border-[#E2E4E8]`,
                                                 index % 2 !== 0 &&
                                                 `border-2 border-[#E2E4E8] rounded-xl `,
@@ -106,32 +121,42 @@ const Teacherstudentbyclass = ({ }) => {
                                                 details={item?.class}
                                                 bg={true}
                                             />
+                                            <Text className="w-40 px-6 pt-6  text-[#737A82] font-medium text-[16px]" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>Academic:</Text>
 
-                                            <View
-                                                className={`flex-row  py-[16px] px-3  justify-between`}
-                                            >
-
-                                                <TouchableOpacity onPress={() => { navigation.navigate("student/attendence", { id: item._id }) }} className=" flex  px-2 py-2  rounded-lg bg-[#205FFF]  ">
-                                                    <Text style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>Attendance</Text>
-                                                    <View className=" flex justify-center  flex-row  pt-2 w-max">
-
+                                            <View className="flex-row py-[16px] px-2 gap-[3.33%]  ">
+                                                <TouchableOpacity
+                                                    onPress={() => { navigation.navigate("student/attendence", { id: item._id }) }}
+                                                    className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
+                                                >
+                                                    <View className="flex justify-center items-center flex-row pt-2 w-full">
                                                         <Attendence color={"white"} />
                                                     </View>
+                                                    <Text className="w-full text-center" style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>
+                                                        Attendance
+                                                    </Text>
                                                 </TouchableOpacity>
 
-                                                <TouchableOpacity onPress={() => { navigation.navigate("student/assessment", { id: item._id }) }} className=" flex  px-2 py-2  rounded-lg bg-[#205FFF]  ">
-                                                    <Text style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>Assessment</Text>
-                                                    <View className=" flex justify-center  flex-row  pt-2 w-max">
-
+                                                <TouchableOpacity
+                                                    onPress={() => { navigation.navigate("student/assessment", { id: item._id }) }}
+                                                    className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
+                                                >
+                                                    <View className="flex justify-center items-center flex-row pt-2 w-full">
                                                         <Assessment color={"white"} />
                                                     </View>
+                                                    <Text className="w-full text-center" style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>
+                                                        Assessment
+                                                    </Text>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity className=" flex  px-2 py-2  rounded-lg bg-[#205FFF]  ">
-                                                    <Text style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>Remark</Text>
-                                                    <View className=" flex justify-center  flex-row  pt-2 w-max">
 
+                                                <TouchableOpacity
+                                                    className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
+                                                >
+                                                    <View className="flex justify-center items-center flex-row pt-2 w-full">
                                                         <Remark color={"white"} />
                                                     </View>
+                                                    <Text className="w-full text-center" style={{ fontFamily: "Matter500", color: "white", fontSize: 14 }}>
+                                                        Remark
+                                                    </Text>
                                                 </TouchableOpacity>
                                             </View>
                                         </View>

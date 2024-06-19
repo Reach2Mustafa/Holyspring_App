@@ -140,7 +140,7 @@ const Studentassessment = ({ }) => {
                                             {subjectAssignments.pending &&
                                                 subjectAssignments.pending.length > 0 ? (
                                                 <ScrollView className={`flex-col gap-8 flex py-12 `}>
-                                                    {subjectAssignments.pending.map((item, index) => (
+                                                    {subjectAssignments.pending.slice().reverse().map((item, index) => (
                                                         <View
                                                             key={item._id}
                                                             className={clsx("flex   text-[#000000] overflow-hidden", index ===
@@ -229,7 +229,7 @@ const Studentassessment = ({ }) => {
                                             {subjectAssignments.submitted &&
                                                 subjectAssignments.submitted.length > 0 ? (
                                                 <View className={`flex-col gap-8 flex py-12 `}>
-                                                    {subjectAssignments.submitted.map((item, index) => (
+                                                    {subjectAssignments.submitted.slice().reverse().map((item, index) => (
                                                         <View
                                                             key={item._id}
                                                             className={clsx("flex   text-[#000000] overflow-hidden", index ===
