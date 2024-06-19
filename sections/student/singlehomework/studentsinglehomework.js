@@ -31,8 +31,8 @@ import Delete from "../../../assets/icons/delete";
 const Card = ({ field, details, bg }) => {
     return (
         <View className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#F9FBFC]" : "")} >
-            <Text className="w-32 text-[#737A82] font-medium text-[16px]" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>{field}</Text>
-            <Text className="text-[16px] w-[60%]" style={{ fontFamily: "Matter", wordBreak: "break-word" }}>{details}</Text>
+            <Text className="w-32 text-[#737A82] font-medium text-[16px] leading-5" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>{field}</Text>
+            <Text className="text-[16px] w-[60%] leading-5" style={{ fontFamily: "Matter", wordBreak: "break-word" }}>{details}</Text>
         </View>
     );
 };
