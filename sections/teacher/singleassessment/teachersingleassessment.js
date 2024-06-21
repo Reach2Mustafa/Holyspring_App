@@ -180,7 +180,7 @@ const Teachersingleassessment = ({ }) => {
                                                     <TouchableOpacity
                                                         key={index}
 
-                                                        className={clsx("text-[0.95rem]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", question.correctAnswer == option
+                                                        className={clsx("text-[15px]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", question.correctAnswer == option
 
                                                             ? `border-[#25D188] bg-[#25D188] text-white`
                                                             : `border-[#E2E4E8] bg-white text-[#373737]`,)}

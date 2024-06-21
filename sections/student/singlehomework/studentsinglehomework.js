@@ -27,6 +27,7 @@ import deletehomeworkbyId from "../../../api/deletehomeworkteacher";
 import Edit from "../../../assets/icons/edit";
 import Save from "../../../assets/icons/save";
 import Delete from "../../../assets/icons/delete";
+import { router } from "expo-router";
 
 const Card = ({ field, details, bg }) => {
     return (
@@ -107,7 +108,7 @@ const Studentsinglehomework = ({ }) => {
         if (!data.error) {
             ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
 
-            navigation.navigate("/teacher/home");
+            router.navigate("/teacher/home");
         }
         else {
             ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);

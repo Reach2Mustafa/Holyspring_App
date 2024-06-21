@@ -258,22 +258,22 @@ const Chating = () => {
                                 }} ref={chatContainerRef}>
                                     <View className={`flex flex-col gap-2  px-4 py-8 pb-[240px]`}>
                                         {messages.map((each, index) => {
-                                            const imageUri = (IMAGE_BASE_URL + each.document);
+                                            const imageUri = (IMAGE_BASE_URL + each?.document);
                                             const { loading = false, error = false } =
                                                 imageLoadingStates[imageUri] || {};
 
                                             return (
                                                 <View className={`w-full`} key={index}>
-                                                    {each.document ? (
+                                                    {each?.document ? (
                                                         <View
-                                                            className={clsx("border p-1 rounded-b-xl", each.sender === user._id
+                                                            className={clsx("border p-1 rounded-b-xl", each?.sender === user._id
                                                                 ? `bg-[#EBF1FF] border-[#DDE7FD] rounded-l-xl self-end`
                                                                 : `bg-[#F9FBFC] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
                                                                 { width: "60%" },
 
-                                                                each.sender === user._id
+                                                                each?.sender === user._id
                                                                     ? { alignSelf: "flex-end" }
                                                                     : { alignSelf: "flex-start" },
                                                             ]}
@@ -286,12 +286,12 @@ const Chating = () => {
 
                                                                 }}
                                                             >
-                                                                {each.sendername}
+                                                                {each?.sendername}
                                                             </Text>
                                                             <TouchableOpacity
                                                                 onPress={() => {
                                                                     if (!error) {
-                                                                        setFullScreenImage(each.document);
+                                                                        setFullScreenImage(each?.document);
                                                                     }
                                                                 }}
                                                             >
@@ -355,10 +355,10 @@ const Chating = () => {
                                                                     style={{
 
                                                                         fontFamily: "Matter",
-                                                                        display: each.message ? "" : "none",
+                                                                        display: each?.message ? "" : "none",
                                                                     }}
                                                                 >
-                                                                    {each.message}
+                                                                    {each?.message}
                                                                 </Text>
                                                                 <Text
                                                                     className="text-xs"
@@ -368,20 +368,20 @@ const Chating = () => {
                                                                         fontFamily: "Matter",
                                                                     }}
                                                                 >
-                                                                    {formatDateAndDay(each.timestamp).time}
+                                                                    {formatDateAndDay(each?.timestamp).time}
                                                                 </Text>
                                                             </View>
                                                         </View>
                                                     ) : (
                                                         <View
-                                                            className={clsx("border p-3 rounded-b-xl", each.sender === user._id
+                                                            className={clsx("border p-3 rounded-b-xl", each?.sender === user._id
                                                                 ? `bg-[#EBF1FF] border-[#DDE7FD] rounded-l-xl self-end`
                                                                 : `bg-[#F9FBFC] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
                                                                 { maxWidth: "60%" },
 
-                                                                each.sender === user._id
+                                                                each?.sender === user._id
                                                                     ? { alignSelf: "flex-end" }
                                                                     : { alignSelf: "flex-start" },
                                                             ]}
@@ -395,12 +395,12 @@ const Chating = () => {
 
                                                                         fontFamily: "Matter",
                                                                         display:
-                                                                            messages[index - 1].sender == each.sender
+                                                                            messages[index - 1]?.sender == each?.sender
                                                                                 ? "none"
                                                                                 : "",
                                                                     }}
                                                                 >
-                                                                    {each.sendername}
+                                                                    {each?.sendername}
                                                                 </Text>
                                                                 <Text
                                                                     className="font-medium text-base text-[#475464]"
@@ -409,7 +409,7 @@ const Chating = () => {
                                                                         fontFamily: "Matter",
                                                                     }}
                                                                 >
-                                                                    {each.message}
+                                                                    {each?.message}
                                                                 </Text>
                                                                 <Text
                                                                     className="text-xs"
@@ -419,7 +419,7 @@ const Chating = () => {
                                                                         fontFamily: "Matter",
                                                                     }}
                                                                 >
-                                                                    {formatDateAndDay(each.timestamp).time}
+                                                                    {formatDateAndDay(each?.timestamp).time}
                                                                 </Text>
                                                             </View>
                                                         </View>

@@ -22,7 +22,7 @@ const Menu = ({ toggleDrawer }) => {
       console.log("Logout successful");
       await Updates.reloadAsync(); // Reload the entire Expo app
       // After calling reloadAsync(), the app will reload and this line may not be necessary.
-      navigation.navigate("/"); // You can remove this line if the app reloads immediately
+      navigation.navigate(" "); // You can remove this line if the app reloads immediately
     } catch (error) {
       console.error("Error during logout:", error);
     }
@@ -196,7 +196,7 @@ const Menu = ({ toggleDrawer }) => {
 
                 </Text>
               ))}
-              <Link href={"/teacher/teacherprofile  "}>
+              <Link href={"/teacher/profile  "}>
 
                 <View className="flex flex-row   items-center gap-2 ">
                   <View>

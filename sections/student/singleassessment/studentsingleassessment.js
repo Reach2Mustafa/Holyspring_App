@@ -14,7 +14,7 @@ import { useRoute } from "@react-navigation/native";
 
 import PagerView from "react-native-pager-view";
 
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import clsx from "clsx";
 import { useUser } from "../../../redux/userContext";
 import getassessmentbyId from "../../../api/getassessmentbyId";
@@ -113,9 +113,8 @@ const Studentsingleassessment = ({ }) => {
 
             await getScoreForAssessment(selectedOption)
             ToastAndroid.show('Submitted successfully!', ToastAndroid.SHORT);
-            navigation.navigate("student/assessment", {
-                id: "dummy",
-            })
+            router.navigate("/student/assessment");
+
         }
 
         setLoading(false)
@@ -206,7 +205,7 @@ const Studentsingleassessment = ({ }) => {
                                                         onPress={() =>
                                                             handleOptionChange(questionIndex + 1, option)
                                                         }
-                                                        className={clsx("text-[0.95rem]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", selectedOption?.answers[questionIndex]?.answer ===
+                                                        className={clsx("text-[15px]  px-2 leading-none py-3 pb-3.5 border-[1px] rounded-lg flex items-center  font-medium", selectedOption?.answers[questionIndex]?.answer ===
                                                             option // Corrected access to selectedOption
                                                             ? `border-[#205FFF] bg-[#205FFF] text-white`
                                                             : `border-[#E2E4E8] bg-white text-[#373737]`,)}

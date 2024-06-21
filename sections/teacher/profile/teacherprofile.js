@@ -18,7 +18,7 @@ import Eyeslash from "../../../assets/icons/eyeslash";
 import clsx from "clsx";
 import { useUser } from "../../../redux/userContext";
 
-const Studentprofile = ({ }) => {
+const Teacherprofile = ({ }) => {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const [oldpassword, setoldPassword] = useState("");
@@ -118,7 +118,7 @@ const Studentprofile = ({ }) => {
                                                         fontFamily: "Matter",
                                                     }}
                                                 >
-                                                    {user?.class} Class
+                                                    Class Teacher - {user?.classteacher}
                                                 </Text>
                                             </View>
                                         </View>
@@ -149,14 +149,14 @@ const Studentprofile = ({ }) => {
                                                             fontFamily: "Matter500",
                                                         }}
                                                     >
-                                                        {user?.rollno}
+                                                        {user?.email}
                                                     </Text>
                                                     <Text
                                                         style={{
                                                             color: `text-[#737A82]`,
                                                             fontFamily: "Matter",
                                                         }}
-                                                    >Student ID
+                                                    > E-Mail Address
                                                     </Text>
                                                 </View>
                                             </View>
@@ -184,51 +184,79 @@ const Studentprofile = ({ }) => {
                                                     </Text>
                                                 </View>
                                             </View>
-                                            {/* <View className={`flex flex-row gap-3 pt-12`}>
-                                                <View className={`pt-1`}>
-                                                    <Date />
-                                                </View>
-                                                <View className={`text-[15.2px]`}>
-                                                    <Text
-                                                        className="text-[#2E303A] font-semibold text-[16px]"
-                                                        style={{
-
-                                                            fontFamily: "Matter500",
-                                                        }}
-                                                    >
-                                                        {user?.dob ? user?.dob : "-"}
-                                                    </Text>
-                                                    <Text
-                                                        style={{
-                                                            color: `text-[#737A82]`,
-                                                            fontFamily: "Matter",
-                                                        }}
-                                                    >
-                                                        Date of Birth
-                                                    </Text>
-                                                </View>
-                                            </View> */}
                                             <View className={`flex flex-row gap-3 pt-12`}>
                                                 <View className={`pt-1`}>
                                                     <Class />
                                                 </View>
                                                 <View className={`text-[15.2px]`}>
-                                                    <Text
-                                                        className="text-[#2E303A] font-semibold text-[16px]"
+                                                    <View
+                                                        className={`gap-1`}
                                                         style={{
 
-                                                            fontFamily: "Matter500",
+                                                            display: "flex",
+                                                            flexDirection: "row",
+                                                            flexWrap: "wrap",
                                                         }}
                                                     >
-                                                        {user?.class}
-                                                    </Text>
+
+                                                        {user?.teachingclass?.map((teachingClass, index) => (
+                                                            <Text
+                                                                key={index}
+                                                                className="text-[#2E303A] font-semibold text-[16px]"
+                                                                style={{
+
+                                                                    fontFamily: "Matter500",
+                                                                }}
+                                                            >
+                                                                {teachingClass}
+                                                            </Text>
+                                                        ))}
+                                                    </View>
                                                     <Text
                                                         style={{
                                                             color: `text-[#737A82]`,
                                                             fontFamily: "Matter",
                                                         }}
                                                     >
-                                                        Grade
+                                                        Classes
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                            <View className={`flex flex-row gap-3 pt-12`}>
+                                                <View className={`pt-1`}>
+                                                    <Date />
+                                                </View>
+                                                <View className={`text-[15.2px]`}>
+                                                    <View
+                                                        className={`gap-1`}
+                                                        style={{
+
+                                                            display: "flex",
+                                                            flexDirection: "row",
+                                                            flexWrap: "wrap",
+                                                        }}
+                                                    >
+
+                                                        {user?.subjects?.map((teachingClass, index) => (
+                                                            <Text
+                                                                key={index}
+                                                                className="text-[#2E303A] font-semibold text-[16px]"
+                                                                style={{
+
+                                                                    fontFamily: "Matter500",
+                                                                }}
+                                                            >
+                                                                {teachingClass}
+                                                            </Text>
+                                                        ))}
+                                                    </View>
+                                                    <Text
+                                                        style={{
+                                                            color: `text-[#737A82]`,
+                                                            fontFamily: "Matter",
+                                                        }}
+                                                    >
+                                                        Subjects
                                                     </Text>
                                                 </View>
                                             </View>
@@ -388,4 +416,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Studentprofile;
+export default Teacherprofile;
