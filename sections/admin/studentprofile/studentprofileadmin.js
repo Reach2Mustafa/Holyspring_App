@@ -22,6 +22,11 @@ import { useRoute } from "@react-navigation/native";
 import ChangeStudentPassword from "../../../api/changestudentpassword";
 import getStudentById from "../../../api/getstudentbyid";
 import ChangeStudentPasswordByadmin from "../../../api/changestudentpassbyadmin";
+import Profile from "../../../assets/icons/profile";
+import EditIcon from "../../../assets/icons/editpencil";
+import CloseIcon from "../../../assets/icons/closeicon";
+import DoneIcon from "../../../assets/icons/doneicon";
+import ChangeStudentName from "../../../api/changestudentname";
 
 const StudentprofileAdmin = ({ }) => {
     const route = useRoute();
@@ -59,6 +64,25 @@ const StudentprofileAdmin = ({ }) => {
     const [activeTab, setActiveTab] = useState("Profile");
     const [user, setuser] = useState("");
     const [pageload, setpageload] = useState(true);
+
+    const [editingName, setEditingName] = useState(false);
+    const [editedName, setEditedName] = useState("");
+
+    const handleNameEdit = async () => {
+        if (editedName.trim() === "") {
+            ToastAndroid.show("Name cannot be empty.", ToastAndroid.SHORT);
+            return;
+        }
+        const changename = await ChangeStudentName(id, editedName)
+        if (changename.error) {
+            return ToastAndroid.show(changename.error, ToastAndroid.SHORT);
+        }
+
+        setuser((prevUser) => ({ ...prevUser, name: editedName }));
+        setEditingName(false);
+        ToastAndroid.show("Name updated successfully.", ToastAndroid.SHORT);
+    };
+
     useEffect(() => {
         const getStudent = async () => {
             const data = await getStudentById(id);
@@ -66,11 +90,12 @@ const StudentprofileAdmin = ({ }) => {
                 return ToastAndroid.show(data.error, ToastAndroid.SHORT);
             }
             setuser(data);
-            console.log(data, "kkkkkkkkkkkkkkkk");
+            setEditedName(data.name);
             setpageload(false);
         };
         getStudent();
     }, []);
+
     return (
         <View className={`flex-1`}>
             {pageload ? (
@@ -134,7 +159,7 @@ const StudentprofileAdmin = ({ }) => {
                                                         fontFamily: "Matter500",
                                                     }}
                                                 >
-                                                    {user?.name}
+                                                    {user?.name.split(" ")[0]}
                                                 </Text>
                                                 <Text
                                                     className="text-[14.5px] font-normal text-[#858585]"
@@ -149,9 +174,7 @@ const StudentprofileAdmin = ({ }) => {
                                     </View>
                                 </View>
                                 <View className={`pt-8`}>
-                                    <View
-                                        className={`border border-[#E2E4E8] px-4 py-2 rounded-xl bg-[#FAFBFD]`}
-                                    >
+                                    <View className={`border border-[#E2E4E8] px-4 py-2 rounded-xl bg-[#FAFBFD]`}>
                                         <View className={`flex flex-row justify-between pt-5`}>
                                             <Text
                                                 className="text-[20px] text-[#16191D] font-medium"
@@ -160,7 +183,52 @@ const StudentprofileAdmin = ({ }) => {
                                                 Personal information
                                             </Text>
                                         </View>
-                                        <View className={`grid grid-cols-2 py-6`}>
+                                        <View className={` w-full py-6`}>
+                                            <View className={`flex flex-row gap-3 pt-6`}>
+                                                <View className={`pt-1`}>
+                                                    <Profile />
+                                                </View>
+                                                <View className={`text-[15.2px] w-full`}>
+                                                    {editingName ? (
+                                                        <View className="flex flex-row   gap-8">
+                                                            <TextInput
+                                                                autoFocus
+                                                                value={editedName}
+                                                                onChangeText={setEditedName}
+                                                                className="  text-[16px] text-[#2E303A] h-[21.25px]   "
+                                                                style={{ fontFamily: "Matter500" }}
+
+                                                            />
+                                                            <TouchableOpacity onPress={handleNameEdit}>
+                                                                <DoneIcon />
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity onPress={() => setEditingName(false)}>
+                                                                <CloseIcon />
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    ) : (
+                                                        <View className="flex flex-row w-full items-center gap-16">
+                                                            <Text
+                                                                className="text-[#2E303A]   text-[16px]"
+                                                                style={{ fontFamily: "Matter500" }}
+                                                            >
+                                                                {user?.name}
+                                                            </Text>
+                                                            <TouchableOpacity onPress={() => setEditingName(true)}>
+                                                                <EditIcon />
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    )}
+                                                    <Text
+                                                        style={{
+                                                            color: `#737A82`,
+                                                            fontFamily: "Matter",
+                                                        }}
+                                                    >
+                                                        Student Name
+                                                    </Text>
+                                                </View>
+                                            </View>
                                             <View className={`flex flex-row gap-3 pt-6`}>
                                                 <View className={`pt-1`}>
                                                     <Email />
@@ -176,7 +244,7 @@ const StudentprofileAdmin = ({ }) => {
                                                     </Text>
                                                     <Text
                                                         style={{
-                                                            color: `text-[#737A82]`,
+                                                            color: `#737A82`,
                                                             fontFamily: "Matter",
                                                         }}
                                                     >
@@ -199,7 +267,7 @@ const StudentprofileAdmin = ({ }) => {
                                                     </Text>
                                                     <Text
                                                         style={{
-                                                            color: `text-[#737A82]`,
+                                                            color: `#737A82`,
                                                             fontFamily: "Matter",
                                                         }}
                                                     >
@@ -207,31 +275,7 @@ const StudentprofileAdmin = ({ }) => {
                                                     </Text>
                                                 </View>
                                             </View>
-                                            {/* <View className={`flex flex-row gap-3 pt-12`}>
-                                                <View className={`pt-1`}>
-                                                    <Date />
-                                                </View>
-                                                <View className={`text-[15.2px]`}>
-                                                    <Text
-                                                        className="text-[#2E303A] font-semibold text-[16px]"
-                                                        style={{
-
-                                                            fontFamily: "Matter500",
-                                                        }}
-                                                    >
-                                                        {user?.dob ? user?.dob : "-"}
-                                                    </Text>
-                                                    <Text
-                                                        style={{
-                                                            color: `text-[#737A82]`,
-                                                            fontFamily: "Matter",
-                                                        }}
-                                                    >
-                                                        Date of Birth
-                                                    </Text>
-                                                </View>
-                                            </View> */}
-                                            <View className={`flex flex-row gap-3 pt-12`}>
+                                            <View className={`flex flex-row gap-3 pt-6`}>
                                                 <View className={`pt-1`}>
                                                     <Class />
                                                 </View>
@@ -246,7 +290,7 @@ const StudentprofileAdmin = ({ }) => {
                                                     </Text>
                                                     <Text
                                                         style={{
-                                                            color: `text-[#737A82]`,
+                                                            color: `#737A82`,
                                                             fontFamily: "Matter",
                                                         }}
                                                     >
@@ -260,142 +304,68 @@ const StudentprofileAdmin = ({ }) => {
                             </View>
                         </ScrollView>
                     ) : (
-                        <View className={`h-full`}>
+                        <View className={`pt-8`}>
                             <View
-                                style={{
-                                    paddingTop: "32px",
-                                    fontFamily: "Avant",
-                                    fontSize: "26px",
-                                    fontStyle: "up",
-                                    fontWeight: "700",
-                                    padding: "24px",
-                                    lineHeight: "tight",
-                                }}
+                                className={`border border-[#E2E4E8] px-4 py-2 rounded-xl bg-[#FAFBFD]`}
                             >
-                                <Text
-                                    className=" py-[32px] text-[20px] uppercase"
-                                    style={{ fontFamily: "Avant" }}
-                                >
-                                    Change Password
-                                </Text>
-                            </View>
-                            <View className="flex flex-col gap-[32px] pb-[32px]">
-                                <View className={`flex flex-col gap-[8px]`}>
-                                    <View
-                                        style={{
-                                            color: "#000000",
-                                            fontSize: "16px",
-                                            fontWeight: "medium",
-                                            paddingBottom: "8px",
-                                        }}
+                                <View className={`flex flex-row justify-between pt-5`}>
+                                    <Text
+                                        className="text-[20px] text-[#16191D] font-medium"
+                                        style={{ fontFamily: "Matter500" }}
                                     >
-                                        <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
-                                            Enter Password:
-                                        </Text>
-                                    </View>
-                                    <View
-                                        onPress={() => {
-                                            setIsEmpty(0);
-                                        }}
-                                        className={`relative flex items-center`}
-                                    >
-                                        <TextInput
-                                            onPress={() => {
-                                                setIsEmpty(0);
-                                            }}
-                                            ref={passwordRef}
-                                            onChangeText={setoldPassword}
-                                            value={oldpassword}
-                                            className={clsx(
-                                                `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
-                                            )}
-                                            style={[{ fontSize: 16 }]}
-                                            placeholder="Password"
-                                            secureTextEntry={!showPassword}
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() => setShowPassword(!showPassword)}
-                                            className={`absolute right-3 h-full flex flex-row items-center`}
-                                        >
-                                            {showPassword ? <Eye /> : <Eyeslash />}
-                                        </TouchableOpacity>
-                                    </View>
+                                        Change Password
+                                    </Text>
                                 </View>
-                                <View className={`flex flex-col gap-[8px]`}>
-                                    <View
-                                        style={{
-                                            color: "#000000",
-                                            fontSize: "16px",
-                                            fontWeight: "medium",
-                                            paddingBottom: "8px",
-                                        }}
-                                    >
-                                        <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
-                                            Confirm Password:
-                                        </Text>
+                                <View className={`py-6`}>
+                                    <View className={`flex flex-row gap-3`}>
+                                        <View className={`pt-1`}>
+                                            <Eye />
+                                        </View>
+                                        <View className={`text-[15.2px]`}>
+                                            <TextInput
+                                                ref={passwordRef}
+                                                value={oldpassword}
+                                                onChangeText={setoldPassword}
+                                                secureTextEntry={!showPassword}
+                                                placeholder="Old Password"
+                                                className={`border border-[#E2E4E8] rounded-lg px-4 py-2`}
+                                            />
+                                        </View>
                                     </View>
-                                    <View
-                                        onPress={() => {
-                                            setIsEmpty(0);
-                                        }}
-                                        className={`relative flex items-center`}
-                                    >
-                                        <TextInput
-                                            onPress={() => {
-                                                setIsEmpty(0);
-                                            }}
-                                            ref={passwordRef}
-                                            onChangeText={setnewpassword}
-                                            value={newpassword}
-                                            className={clsx(
-                                                `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
-                                            )}
-                                            style={[{ fontSize: 16 }]}
-                                            placeholder="Password"
-                                            secureTextEntry={!showPassword}
-                                        />
+                                    <View className={`flex flex-row gap-3 pt-6`}>
+                                        <View className={`pt-1`}>
+                                            <Eyeslash />
+                                        </View>
+                                        <View className={`text-[15.2px]`}>
+                                            <TextInput
+                                                ref={passwordRef}
+                                                value={newpassword}
+                                                onChangeText={setnewpassword}
+                                                secureTextEntry={!showPassword}
+                                                placeholder="New Password"
+                                                className={`border border-[#E2E4E8] rounded-lg px-4 py-2`}
+                                            />
+                                        </View>
+                                    </View>
+                                    <View className={`flex flex-row gap-3 pt-6`}>
                                         <TouchableOpacity
-                                            onPress={() => setShowPassword(!showPassword)}
-                                            className={`absolute right-3 h-full flex flex-row items-center`}
+                                            onPress={changePassword}
+                                            className={`bg-blue-500 rounded-lg py-2 px-4`}
                                         >
-                                            {showPassword ? <Eye /> : <Eyeslash />}
+                                            {loading ? (
+                                                <ActivityIndicator size="small" color="#fff" />
+                                            ) : (
+                                                <Text
+                                                    className="text-white text-center"
+                                                    style={{ fontFamily: "Matter500" }}
+                                                >
+                                                    Change Password
+                                                </Text>
+                                            )}
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: "#205FFF",
-                                    width: "100%",
-                                    fontFamily: "Matter",
-                                    cursor: "pointer",
-                                    justifyContent: "center",
-                                    marginTop: 5,
-                                    textAlign: "center",
-                                    color: "white",
-                                    fontWeight: "medium",
-                                    paddingVertical: 4,
-                                    borderRadius: 999,
-                                    flexDirection: "row",
-                                    gap: 3,
-                                    alignItems: "center",
-                                    minHeight: 60,
-                                }}
-                                onPress={changePassword}
-                            >
-                                <Text
-                                    style={{
-                                        color: "white",
-                                        display: loading ? "none" : "flex",
-                                        fontFamily: "Matter",
-                                    }}
-                                >
-                                    Change Password
-                                </Text>
-                                {loading && <ActivityIndicator color={"white"} />}
-                            </TouchableOpacity>
                         </View>
                     )}
                 </View>
@@ -403,17 +373,5 @@ const StudentprofileAdmin = ({ }) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-});
 
 export default StudentprofileAdmin;
