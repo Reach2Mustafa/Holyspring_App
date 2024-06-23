@@ -134,7 +134,7 @@ const StudentprofileAdmin = ({ }) => {
                                                         fontFamily: "Matter500",
                                                     }}
                                                 >
-                                                    {user?.name.split(" ")[0]}
+                                                    {user?.name}
                                                 </Text>
                                                 <Text
                                                     className="text-[14.5px] font-normal text-[#858585]"

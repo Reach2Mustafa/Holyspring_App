@@ -25,6 +25,7 @@ import ArrowLeft from "../../../assets/icons/arrowleft";
 import Assbtn from "../../../assets/icons/assbtn";
 import getsubmittedassesmentbyid from "../../../api/getsubmittedassesmentbyid";
 import getsubmittedassesmentbyidteacher from "../../../api/getsubmittedassesmentbyidteacher";
+import getsubmittedassesmentbyidadmin from "../../../api/submittedassbyidadmin";
 const Studentsubmitedassessment = ({ }) => {
     const pagerRef = useRef(null);
     const [currentpage, setCurrentPage] = useState(0); // State to track the current page
@@ -77,6 +78,11 @@ const Studentsubmitedassessment = ({ }) => {
                 setpageload(false);
             } else if (user.usertype == "teacher") {
                 const d = await getsubmittedassesmentbyidteacher(id, studentId);
+                setdetails(d);
+                setpageload(false);
+            }
+            else if (user.usertype == "admin") {
+                const d = await getsubmittedassesmentbyidadmin(id, studentId);
                 setdetails(d);
                 setpageload(false);
             }
