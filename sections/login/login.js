@@ -19,6 +19,7 @@ import Eyeslash from "../../assets/icons/eyeslash";
 import Eye from "../../assets/icons/eye";
 import login1 from "../../api/login";
 import Teacherlogin from "../../api/teacherlogin";
+import adminlogin from "../../api/adminlogin";
 const Login = () => {
 
     const { state, dispatch } = useUser();
@@ -35,6 +36,10 @@ const Login = () => {
                 else if (user.usertype == "teacher") {
                     navigation.navigate("teacher/home");
                 }
+                else if (user.usertype == "admin") {
+                    navigation.navigate("admin/home");
+                }
+
             } else if (!user && token == null) {
                 setpageload(false);
             }
@@ -85,6 +90,17 @@ const Login = () => {
         } else {
             if (emailValue.includes("@")) {
                 const user = await Teacherlogin(email, password);
+                if (user.name) {
+
+                    dispatch({ type: "SET_USER", payload: user });
+                }
+                else {
+                    ToastAndroid.show("Invalid Details", ToastAndroid.SHORT);
+
+                }
+            }
+            else if (emailValue.includes("admin")) {
+                const user = await adminlogin(email, password);
                 if (user.name) {
 
                     dispatch({ type: "SET_USER", payload: user });

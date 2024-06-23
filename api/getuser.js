@@ -25,10 +25,20 @@ const getuser = async (token) => {
     } catch (teacherError) {
       console.log("Error fetching teacher data:", teacherError);
 
-      // If both requests fail, clear the token and reload the app
-      AsyncStorage.removeItem("token");
-      await Updates.reloadAsync();
-      return null;
+      try {
+        // If teacher request fails, try to get admin data
+        const adminResponse = await axiosInstance.get("/admin/getadmin", {
+          headers,
+        });
+        return adminResponse.data;
+      } catch (adminError) {
+        console.log("Error fetching admin data:", adminError);
+
+        // If all requests fail, clear the token and reload the app
+        AsyncStorage.removeItem("token");
+        await Updates.reloadAsync();
+        return null;
+      }
     }
   }
 };

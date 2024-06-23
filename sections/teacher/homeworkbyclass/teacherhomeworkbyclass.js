@@ -135,7 +135,7 @@ const Teacherhomeworkbyclass = ({ }) => {
                                     <Notavailable />
                                     <Text className="text-xl text-black" style={{
 
-                                        fontFamily: "Inter-BoldItalic",
+                                        fontFamily: "Avant",
                                     }}>
                                         No Homework available
                                     </Text>

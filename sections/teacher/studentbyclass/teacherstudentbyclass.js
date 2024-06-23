@@ -27,6 +27,8 @@ import Assessment from "../../../assets/icons/assessment";
 import Remark from "../../../assets/icons/remark";
 import Search from "../../../assets/icons/search";
 
+import getstudentsbystandardadmin from "../../../api/getallstudents";
+
 const Card = ({ field, details, bg }) => {
   return (
     <View
@@ -48,7 +50,7 @@ const Card = ({ field, details, bg }) => {
   );
 };
 
-const Teacherstudentbyclass = ({}) => {
+const Teacherstudentbyclass = ({ }) => {
   const { state } = useUser();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -63,12 +65,19 @@ const Teacherstudentbyclass = ({}) => {
   useEffect(() => {
     setdate(getFormattedDate());
     const getHomework = async () => {
-      const token = await AsyncStorage.getItem("token");
+      if (user.usertype == "teacher") {
+        const data = await getstudentsbystandard(class1);
+        console.log(data);
+        setsubjectAssignments(data);
+        setpageload(false);
+      } else if (user.usertype == "admin") {
+        const data = await getstudentsbystandardadmin(class1);
+        console.log(data);
+        setsubjectAssignments(data);
+        setpageload(false);
+      }
 
-      const data = await getstudentsbystandard(class1);
-      console.log(data);
-      setsubjectAssignments(data);
-      setpageload(false);
+
     };
     getHomework();
 
@@ -76,7 +85,7 @@ const Teacherstudentbyclass = ({}) => {
       console.log(user);
     }
   }, [user]);
-  const navigate = async () => {};
+  const navigate = async () => { };
 
   const filteredAssignments = subjectAssignments?.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -134,11 +143,11 @@ const Teacherstudentbyclass = ({}) => {
                       className={clsx(
                         "flex   text-[#000000] overflow-hidden",
                         index === filteredAssignments.length - 1 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`,
+                        `rounded-xl border-2 border-[#E2E4E8]`,
                         index % 2 !== 0 &&
-                          `border-2 border-[#E2E4E8] rounded-xl `,
+                        `border-2 border-[#E2E4E8] rounded-xl `,
                         index % 2 === 0 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`
+                        `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
                       <Card field="Name:" details={item?.name} bg={true} />
@@ -236,7 +245,7 @@ const Teacherstudentbyclass = ({}) => {
                   <Text
                     className="text-xl text-black"
                     style={{
-                      fontFamily: "Inter-BoldItalic",
+                      fontFamily: "Avant",
                     }}
                   >
                     No Students available
