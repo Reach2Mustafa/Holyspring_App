@@ -257,7 +257,7 @@ const Menu = ({ toggleDrawer }) => {
                 </Text>
                 <Text
 
-                  onPress={() => { navigation.navigate("admin/allclass", { callback: "teacher" }) }}>
+                  onPress={() => { navigation.navigate("admin/teachers") }}>
 
                   <View className={`flex flex-row items-center gap-2`}>
                     <View>
