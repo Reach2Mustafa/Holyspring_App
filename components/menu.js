@@ -286,14 +286,14 @@ const Menu = ({ toggleDrawer }) => {
 
 
 
-                <Link href={"/admin/profile"}>
+                <Link href={"/admin/addteacher"}>
 
                   <View className="flex flex-row   items-center gap-2 ">
                     <View>
                       <Profile />
                     </View>
                     <Text className="text-[18px]" style={{ fontFamily: "Matter500", color: "#16191D" }}>
-                      Profile
+                      Add Teacher
                     </Text>
                   </View>
                 </Link>
