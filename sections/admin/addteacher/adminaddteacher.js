@@ -26,6 +26,7 @@ import ArrowLeft from "../../../assets/icons/arrowleft";
 import Assbtn from "../../../assets/icons/assbtn";
 import Eye from "../../../assets/icons/eye";
 import Eyeslash from "../../../assets/icons/eyeslash";
+import AddTeacher from "../../../api/addTeacher";
 const Adminaddteacher = ({ }) => {
     const pagerRef = useRef(null);
     const [showPassword, setShowPassword] = useState(false);
@@ -41,12 +42,15 @@ const Adminaddteacher = ({ }) => {
     const [currentpage, setCurrentPage] = useState(0); // State to track the current page
     const [loading, setLoading] = useState(false);
     const [classteacher, setClassteacher] = useState(); //
+
+
+
     const gotonextpage = () => {
         if (currentpage < 3) {
-            // Check if current page is less than total pages
-            setCurrentPage(currentpage + 1); // Increment current page
-            pagerRef.current.setPage(currentpage + 1); // Go to next page
-
+            if (validateCurrentPageFields()) {
+                setCurrentPage(currentpage + 1);
+                pagerRef.current.setPage(currentpage + 1);
+            }
         } else {
             ToastAndroid.show("You have reached last step", ToastAndroid.SHORT);
         }
@@ -54,14 +58,53 @@ const Adminaddteacher = ({ }) => {
 
     const gotoprevpage = () => {
         if (currentpage > 0) {
-            // Check if current page is greater than 0
-            setCurrentPage(currentpage - 1); // Decrement current page
-            pagerRef.current.setPage(currentpage - 1); // Go to previous page
-
+            setCurrentPage(currentpage - 1);
+            pagerRef.current.setPage(currentpage - 1);
         } else {
             ToastAndroid.show("No previous step", ToastAndroid.SHORT);
         }
     };
+
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+
+
+    const validateCurrentPageFields = () => {
+        if (currentpage === 0) {
+            if (!name || !email || !phone || !password) {
+                ToastAndroid.show("Please fill in all fields", ToastAndroid.SHORT);
+                return false;
+            }
+            if (!validateEmail(email)) {
+                ToastAndroid.show("Please enter a valid email address", ToastAndroid.SHORT);
+                return false;
+            }
+        } else if (currentpage === 1) {
+            if (selectedSubjects.length === 0) {
+                ToastAndroid.show("Please select at least one subject", ToastAndroid.SHORT);
+                return false;
+            }
+        } else if (currentpage === 2) {
+            if (selectedClasses.length === 0) {
+                ToastAndroid.show("Please select at least one class", ToastAndroid.SHORT);
+                return false;
+            }
+        } else if (currentpage === 3) {
+            if (!classteacher) {
+                ToastAndroid.show("Please select a class teacher", ToastAndroid.SHORT);
+                return false;
+            }
+        }
+        return true;
+    };
+
+
+
+
     const { state } = useUser();
 
     const navigation = useNavigation();
@@ -84,11 +127,17 @@ const Adminaddteacher = ({ }) => {
 
     const Submit = async () => {
         setLoading(true)
-        if (!loading && (currentpage == details?.questions.length - 1)) {
-
-            await getScoreForAssessment(selectedOption)
-            ToastAndroid.show('Submitted successfully!', ToastAndroid.SHORT);
-            router.navigate("/student/assessment");
+        if (!loading && (currentpage == 3)) {
+            console.log(1111111111);
+            const addteacher = await AddTeacher(name, email, password, phone, selectedSubjects, selectedClasses, classteacher)
+            if (addteacher.error) {
+                ToastAndroid.show(addteacher.error, ToastAndroid.SHORT);
+                return;
+            }
+            ToastAndroid.show('Added successfully!', ToastAndroid.SHORT);
+            navigation.navigate("admin/teacherprofileadmin", {
+                id: addteacher._id,
+            });
 
         }
 
@@ -138,6 +187,13 @@ const Adminaddteacher = ({ }) => {
             }
         });
     };
+
+    const handleClassTeacherPress = (teachingClass) => {
+        setClassteacher((prevClassteacher) => prevClassteacher === teachingClass ? null : teachingClass);
+    };
+
+
+
     return (
         <View className={`flex-1  h-full`}>
             {pageload ? (
@@ -193,7 +249,7 @@ const Adminaddteacher = ({ }) => {
                                                 }}
                                                 ref={emailRef}
                                                 onChangeText={setname}
-                                                value={email}
+                                                value={name}
                                                 className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
                                                     : `border-[#EDEEF4]`,)}
                                                 style={{
@@ -211,7 +267,7 @@ const Adminaddteacher = ({ }) => {
                                                     setIsEmpty(0);
                                                 }}
                                                 ref={emailRef}
-                                                onChangeText={setname}
+                                                onChangeText={setEmail}
                                                 value={email}
                                                 className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
                                                     : `border-[#EDEEF4]`,)}
@@ -231,14 +287,15 @@ const Adminaddteacher = ({ }) => {
                                                 }}
                                                 ref={emailRef}
                                                 onChangeText={setphone}
-                                                value={email}
+                                                value={phone}
                                                 className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
                                                     : `border-[#EDEEF4]`,)}
                                                 style={{
                                                     fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
                                                 }}
+
                                                 placeholder="Phone"
-                                                keyboardType="email-address"
+                                                keyboardType="number-pad"
                                             />
                                         </View>
                                         <View>
@@ -369,7 +426,7 @@ const Adminaddteacher = ({ }) => {
                                         >
                                             {classes.map((teachingClass, index) => (
                                                 <TouchableOpacity
-                                                    onPress={() => { setClassteacher(teachingClass) }}
+                                                    onPress={() => { handleClassTeacherPress(teachingClass) }}
                                                     key={index}
                                                     className={clsx(`p-3 flex justify-center items-center py-[48px]    rounded-lg`,
                                                         classteacher === teachingClass ? `bg-blue-500` : `bg-gray-600`,)}
@@ -438,7 +495,7 @@ const Adminaddteacher = ({ }) => {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
-                        onPress={() => { Submit() }}
+                        onPress={() => Submit()}
                         className={clsx(" rounded-full w-[80px] flex items-center ", currentpage === 3 ? `bg-[#205FFF]` : `bg-[#9B9B9B]`)}
 
                     >

@@ -304,68 +304,142 @@ const StudentprofileAdmin = ({ }) => {
                             </View>
                         </ScrollView>
                     ) : (
-                        <View className={`pt-8`}>
+                        <View className={`h-full`}>
                             <View
-                                className={`border border-[#E2E4E8] px-4 py-2 rounded-xl bg-[#FAFBFD]`}
+                                style={{
+                                    paddingTop: "32px",
+                                    fontFamily: "Avant",
+                                    fontSize: "26px",
+                                    fontStyle: "up",
+                                    fontWeight: "700",
+                                    padding: "24px",
+                                    lineHeight: "tight",
+                                }}
                             >
-                                <View className={`flex flex-row justify-between pt-5`}>
-                                    <Text
-                                        className="text-[20px] text-[#16191D] font-medium"
-                                        style={{ fontFamily: "Matter500" }}
+                                <Text
+                                    className=" py-[32px] text-[20px] uppercase"
+                                    style={{ fontFamily: "Avant" }}
+                                >
+                                    Change Password
+                                </Text>
+                            </View>
+                            <View className="flex flex-col gap-[32px] pb-[32px]">
+                                <View className={`flex flex-col gap-[8px]`}>
+                                    <View
+                                        style={{
+                                            color: "#000000",
+                                            fontSize: "16px",
+                                            fontWeight: "medium",
+                                            paddingBottom: "8px",
+                                        }}
                                     >
-                                        Change Password
-                                    </Text>
-                                </View>
-                                <View className={`py-6`}>
-                                    <View className={`flex flex-row gap-3`}>
-                                        <View className={`pt-1`}>
-                                            <Eye />
-                                        </View>
-                                        <View className={`text-[15.2px]`}>
-                                            <TextInput
-                                                ref={passwordRef}
-                                                value={oldpassword}
-                                                onChangeText={setoldPassword}
-                                                secureTextEntry={!showPassword}
-                                                placeholder="Old Password"
-                                                className={`border border-[#E2E4E8] rounded-lg px-4 py-2`}
-                                            />
-                                        </View>
+                                        <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
+                                            Enter Password:
+                                        </Text>
                                     </View>
-                                    <View className={`flex flex-row gap-3 pt-6`}>
-                                        <View className={`pt-1`}>
-                                            <Eyeslash />
-                                        </View>
-                                        <View className={`text-[15.2px]`}>
-                                            <TextInput
-                                                ref={passwordRef}
-                                                value={newpassword}
-                                                onChangeText={setnewpassword}
-                                                secureTextEntry={!showPassword}
-                                                placeholder="New Password"
-                                                className={`border border-[#E2E4E8] rounded-lg px-4 py-2`}
-                                            />
-                                        </View>
-                                    </View>
-                                    <View className={`flex flex-row gap-3 pt-6`}>
-                                        <TouchableOpacity
-                                            onPress={changePassword}
-                                            className={`bg-blue-500 rounded-lg py-2 px-4`}
-                                        >
-                                            {loading ? (
-                                                <ActivityIndicator size="small" color="#fff" />
-                                            ) : (
-                                                <Text
-                                                    className="text-white text-center"
-                                                    style={{ fontFamily: "Matter500" }}
-                                                >
-                                                    Change Password
-                                                </Text>
+                                    <View
+                                        onPress={() => {
+                                            setIsEmpty(0);
+                                        }}
+                                        className={`relative flex items-center`}
+                                    >
+                                        <TextInput
+                                            onPress={() => {
+                                                setIsEmpty(0);
+                                            }}
+                                            ref={passwordRef}
+                                            onChangeText={setoldPassword}
+                                            value={oldpassword}
+                                            className={clsx(
+                                                `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
+                                                isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
                                             )}
+                                            style={[{ fontSize: 16 }]}
+                                            placeholder="Password"
+                                            secureTextEntry={!showPassword}
+                                        />
+                                        <TouchableOpacity
+                                            onPress={() => setShowPassword(!showPassword)}
+                                            className={`absolute right-3 h-full flex flex-row items-center`}
+                                        >
+                                            {showPassword ? <Eye /> : <Eyeslash />}
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                                <View className={`flex flex-col gap-[8px]`}>
+                                    <View
+                                        style={{
+                                            color: "#000000",
+                                            fontSize: "16px",
+                                            fontWeight: "medium",
+                                            paddingBottom: "8px",
+                                        }}
+                                    >
+                                        <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
+                                            Confirm Password:
+                                        </Text>
+                                    </View>
+                                    <View
+                                        onPress={() => {
+                                            setIsEmpty(0);
+                                        }}
+                                        className={`relative flex items-center`}
+                                    >
+                                        <TextInput
+                                            onPress={() => {
+                                                setIsEmpty(0);
+                                            }}
+                                            ref={passwordRef}
+                                            onChangeText={setnewpassword}
+                                            value={newpassword}
+                                            className={clsx(
+                                                `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
+                                                isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
+                                            )}
+                                            style={[{ fontSize: 16 }]}
+                                            placeholder="Password"
+                                            secureTextEntry={!showPassword}
+                                        />
+                                        <TouchableOpacity
+                                            onPress={() => setShowPassword(!showPassword)}
+                                            className={`absolute right-3 h-full flex flex-row items-center`}
+                                        >
+                                            {showPassword ? <Eye /> : <Eyeslash />}
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: "#205FFF",
+                                    width: "100%",
+                                    fontFamily: "Matter",
+                                    cursor: "pointer",
+                                    justifyContent: "center",
+                                    marginTop: 5,
+                                    textAlign: "center",
+                                    color: "white",
+                                    fontWeight: "medium",
+                                    paddingVertical: 4,
+                                    borderRadius: 999,
+                                    flexDirection: "row",
+                                    gap: 3,
+                                    alignItems: "center",
+                                    minHeight: 60,
+                                }}
+                                onPress={changePassword}
+                            >
+                                <Text
+                                    style={{
+                                        color: "white",
+                                        display: loading ? "none" : "flex",
+                                        fontFamily: "Matter",
+                                    }}
+                                >
+                                    Change Password
+                                </Text>
+                                {loading && <ActivityIndicator color={"white"} />}
+                            </TouchableOpacity>
                         </View>
                     )}
                 </View>
