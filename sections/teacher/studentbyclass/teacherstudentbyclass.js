@@ -50,7 +50,7 @@ const Card = ({ field, details, bg }) => {
   );
 };
 
-const Teacherstudentbyclass = ({ }) => {
+const Teacherstudentbyclass = ({}) => {
   const { state } = useUser();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -76,8 +76,6 @@ const Teacherstudentbyclass = ({ }) => {
         setsubjectAssignments(data);
         setpageload(false);
       }
-
-
     };
     getHomework();
 
@@ -85,7 +83,7 @@ const Teacherstudentbyclass = ({ }) => {
       console.log(user);
     }
   }, [user]);
-  const navigate = async () => { };
+  const navigate = async () => {};
 
   const filteredAssignments = subjectAssignments?.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -143,16 +141,25 @@ const Teacherstudentbyclass = ({ }) => {
                       className={clsx(
                         "flex   text-[#000000] overflow-hidden",
                         index === filteredAssignments.length - 1 &&
-                        `rounded-xl border-2 border-[#E2E4E8]`,
+                          `rounded-xl border-2 border-[#E2E4E8]`,
                         index % 2 !== 0 &&
-                        `border-2 border-[#E2E4E8] rounded-xl `,
+                          `border-2 border-[#E2E4E8] rounded-xl `,
                         index % 2 === 0 &&
-                        `rounded-xl border-2 border-[#E2E4E8]`
+                          `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
-                      <Card field="Name:" details={item?.name} bg={true} />
-                      <Card field="Roll-No:" details={item?.rollno} />
-                      <Card field="Class:" details={item?.class} bg={true} />
+                      <TouchableOpacity
+                        onPress={() => {
+                          user.usertype == "admin" &&
+                            navigation.navigate("admin/studentprofileadmin", {
+                              id: item._id,
+                            });
+                        }}
+                      >
+                        <Card field="Name:" details={item?.name} bg={true} />
+                        <Card field="Roll-No:" details={item?.rollno} />
+                        <Card field="Class:" details={item?.class} bg={true} />
+                      </TouchableOpacity>
                       <Text
                         className="w-40 px-6 pt-6  text-[#737A82] font-medium text-[16px]"
                         style={{

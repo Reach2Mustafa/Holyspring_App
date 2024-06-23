@@ -1,9 +1,9 @@
 import axiosInstance from "./axiosinstance";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const ChangeStudentPassword = async (oldpassword, newpassword) => {
+const ChangeStudentPasswordByadmin = async (studentId, newpassword) => {
     const requestData = {
-        oldpassword: oldpassword,
-        newpassword: newpassword,
+        studentId: studentId,
+        password: newpassword,
     };
     const token = await AsyncStorage.getItem("token")
 
@@ -11,7 +11,7 @@ const ChangeStudentPassword = async (oldpassword, newpassword) => {
         authorization: `Bearer ${token}`,
     };
     try {
-        const response = await axiosInstance.post('/student/changepassword', requestData, { headers });
+        const response = await axiosInstance.post('/admin/changestudentpassword', requestData, { headers });
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -19,4 +19,4 @@ const ChangeStudentPassword = async (oldpassword, newpassword) => {
 
     }
 };
-export default ChangeStudentPassword;
+export default ChangeStudentPasswordByadmin;
