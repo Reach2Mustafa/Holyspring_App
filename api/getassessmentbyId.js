@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axiosInstance from "./axiosinstance";
 const getassessmentbyId = async (id) => {
-    const token = await AsyncStorage.getItem("token")
+  const token = await AsyncStorage.getItem("token")
   const headers = {
     authorization: `Bearer ${token}`,
   };
@@ -13,8 +13,8 @@ const getassessmentbyId = async (id) => {
     return response.data;
   } catch (error) {
     console.log(error);
-   
-   
+
+
     return null;
   }
 };
