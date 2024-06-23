@@ -159,7 +159,7 @@ const Menu = ({ toggleDrawer }) => {
                     </Text>
                   </View>
                 </Link>
-                <Link href={"/teacher/attendence"}>
+                {user.classteacher && <Link href={"/teacher/attendence"}>
 
                   <View className="flex flex-row   items-center gap-2 ">
                     <View>
@@ -169,7 +169,8 @@ const Menu = ({ toggleDrawer }) => {
                       Attendance
                     </Text>
                   </View>
-                </Link>
+                </Link>}
+
                 <Link href={"/teacher/students"}>
 
                   <View className="flex flex-row   items-center gap-2 ">

@@ -11,6 +11,8 @@ import getFormattedDate from "../../../utils/getFormattedDate";
 import getstudenthomework from "../../../api/getstudenthomework";
 import clsx from "clsx";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
+import gethomeworkteacheradmin from "../../../api/admingetteacherhomework";
+import { useRoute } from "@react-navigation/native";
 
 
 
@@ -22,22 +24,29 @@ const Studenthomework = ({ }) => {
     const [date, setdate] = useState();
     const [pageload, setpageload] = useState(true);
     const [subjectAssignments, setsubjectAssignments] = useState();
+    const route = useRoute();
+    const { id } = route.params;
     useEffect(() => {
         setdate(getFormattedDate());
+
         const getHomework = async () => {
             const token = await AsyncStorage.getItem("token");
-
-            const data = await getstudenthomework(token);
-            console.log(data);
-            setsubjectAssignments(data);
-            setpageload(false);
+            if (user.usertype === "student") {
+                const data = await getstudenthomework(token);
+                console.log(data);
+                setsubjectAssignments(data);
+                setpageload(false);
+            } else if (user.usertype === "admin") {
+                const data = await gethomeworkteacheradmin(id);
+                console.log(data);
+                setsubjectAssignments(data);
+                setpageload(false);
+            }
         };
-        getHomework();
 
-        if (user) {
-            console.log(user);
-        }
+        getHomework();
     }, [user]);
+
     const navigate = async () => {
 
     }

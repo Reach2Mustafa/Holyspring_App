@@ -169,9 +169,9 @@ const Allteachers = ({ }) => {
                                             <View className="flex-row py-[16px] px-2 gap-[3.33%]  ">
                                                 <TouchableOpacity
                                                     onPress={() => {
-                                                        navigation.navigate("student/attendence", {
+                                                        navigation.navigate("student/homework", {
                                                             id: item._id,
-                                                            student: item.name,
+
                                                         });
                                                     }}
                                                     className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
