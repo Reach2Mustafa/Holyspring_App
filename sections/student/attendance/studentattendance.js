@@ -16,8 +16,9 @@ import Assbtn from "../../../assets/icons/assbtn";
 import clsx from "clsx";
 import { useRoute } from "@react-navigation/native";
 import getStudentattendanceteacher from "../../../api/getStudentattendanceteacher";
+import getStudentattendanceadmin from "../../../api/getstudentattendaceadmin";
 
-const Studentattendance = ({}) => {
+const Studentattendance = ({ }) => {
   const pagerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState(getFormattedDate());
@@ -35,6 +36,10 @@ const Studentattendance = ({}) => {
         setAttendence(data);
       } else if (user.usertype == "teacher") {
         const data = await getStudentattendanceteacher(id);
+        setAttendence(data);
+      }
+      else if (user.usertype == "admin") {
+        const data = await getStudentattendanceadmin(id);
         setAttendence(data);
       }
 
@@ -82,8 +87,8 @@ const Studentattendance = ({}) => {
               entry.isPresent === null
                 ? "gray"
                 : entry.isPresent
-                ? "green"
-                : "red",
+                  ? "green"
+                  : "red",
           },
           text: {
             color: entry.isLate ? "yellow" : "white",
@@ -182,31 +187,31 @@ const Studentattendance = ({}) => {
                                 color: entry.holiday
                                   ? "#fff"
                                   : entry.isLate == "yes"
-                                  ? "#fff"
-                                  : entry.isPresent === "present"
-                                  ? "#fff"
-                                  : entry.isPresent === "absent"
-                                  ? "#fff"
-                                  : "#737A82",
+                                    ? "#fff"
+                                    : entry.isPresent === "present"
+                                      ? "#fff"
+                                      : entry.isPresent === "absent"
+                                        ? "#fff"
+                                        : "#737A82",
                                 borderColor: entry.holiday
                                   ? "#0470BC"
                                   : entry.isLate == "yes"
-                                  ? "#FBFD04"
-                                  : entry.isPresent === "present"
-                                  ? "#35BB3E"
-                                  : entry.isPresent === "absent"
-                                  ? "#C0272C"
-                                  : "#EAEAEE",
+                                    ? "#FBFD04"
+                                    : entry.isPresent === "present"
+                                      ? "#35BB3E"
+                                      : entry.isPresent === "absent"
+                                        ? "#C0272C"
+                                        : "#EAEAEE",
 
                                 backgroundColor: entry.holiday
                                   ? "#0470BC"
                                   : entry.isLate == "yes"
-                                  ? "#FBFD04"
-                                  : entry.isPresent === "present"
-                                  ? "#35BB3E"
-                                  : entry.isPresent === "absent"
-                                  ? "#C0272C"
-                                  : "#fff",
+                                    ? "#FBFD04"
+                                    : entry.isPresent === "present"
+                                      ? "#35BB3E"
+                                      : entry.isPresent === "absent"
+                                        ? "#C0272C"
+                                        : "#fff",
                               }}
                             >
                               {entryIndex + 1}

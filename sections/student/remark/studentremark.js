@@ -16,6 +16,7 @@ import Notavailable from "../../../assets/icons/notavailable";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
 import getsinglestudentremark from "../../../api/getsinglestudentremark";
 import { useNavigation } from "expo-router";
+import getsinglestudentremarkadmin from "../../../api/getstudentremarkadmin";
 const Card = ({ field, details, bg }) => {
   return (
     <View
@@ -36,7 +37,7 @@ const Card = ({ field, details, bg }) => {
     </View>
   );
 };
-const Studentremark = ({}) => {
+const Studentremark = ({ }) => {
   const [remark, setremark] = useState();
   const { state } = useUser();
   const navigation = useNavigation();
@@ -60,6 +61,12 @@ const Studentremark = ({}) => {
       } else if (user.usertype == "teacher") {
         setpageload(true);
         const data = await getsinglestudentremark(id);
+        setremark(data);
+        setpageload(false);
+      }
+      else if (user.usertype == "admin") {
+        setpageload(true);
+        const data = await getsinglestudentremarkadmin(id);
         setremark(data);
         setpageload(false);
       }
@@ -112,11 +119,11 @@ const Studentremark = ({}) => {
                       className={clsx(
                         `flex text-[#000000] overflow-hidden`,
                         index === remark.length - 1 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`,
+                        `rounded-xl border-2 border-[#E2E4E8]`,
                         index % 2 !== 0 &&
-                          `border-2 border-[#E2E4E8] rounded-xl`,
+                        `border-2 border-[#E2E4E8] rounded-xl`,
                         index % 2 === 0 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`
+                        `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
                       <Card field="remark:" details={item?.remark} bg={true} />
