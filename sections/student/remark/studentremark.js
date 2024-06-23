@@ -126,16 +126,16 @@ const Studentremark = ({ }) => {
                         `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
-                      <Card field="remark:" details={item?.remark} bg={true} />
+                      <Card field="Remark:" details={item?.remark} bg={true} />
 
-                      <Card field="remark by:" details={item?.teacher?.name} />
+                      <Card field="Remark by:" details={item?.teacher?.name} />
                       <Card
-                        field="remark date:"
+                        field="Remark date:"
                         details={formatDateAndDay(item?.updatedAt).date}
                         bg={true}
                       />
                       <Card
-                        field="remark time:"
+                        field="Remark time:"
                         details={formatDateAndDay(item?.updatedAt).time}
                       />
                     </View>

@@ -147,7 +147,7 @@ const Allteachers = ({ }) => {
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     user.usertype == "admin" &&
-                                                        navigation.navigate("admin/studentprofileadmin", {
+                                                        navigation.navigate("admin/teacherprofileadmin", {
                                                             id: item._id,
                                                         });
                                                 }}
@@ -193,9 +193,9 @@ const Allteachers = ({ }) => {
 
                                                 <TouchableOpacity
                                                     onPress={() => {
-                                                        navigation.navigate("student/assessment", {
+                                                        navigation.navigate("teacher/assessmentbyclass", {
                                                             id: item._id,
-                                                            student: item.name,
+                                                            class1: item.name,
                                                         });
                                                     }}
                                                     className="flex px-2 py-2 rounded-lg bg-[#17a2b8] min-w-[30%] max-w-[30%] items-center"
@@ -217,7 +217,7 @@ const Allteachers = ({ }) => {
 
                                                 <TouchableOpacity
                                                     onPress={() => {
-                                                        navigation.navigate("student/remark", {
+                                                        navigation.navigate("admin/teacherremark", {
                                                             id: item._id,
                                                             student: item.name,
                                                         });
