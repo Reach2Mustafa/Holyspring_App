@@ -6,6 +6,7 @@ import {
     ActivityIndicator,
     TouchableOpacity,
     TextInput,
+    ToastAndroid,
 } from "react-native";
 import { ScrollView } from "react-native";
 
@@ -17,6 +18,7 @@ import Eye from "../../../assets/icons/eye";
 import Eyeslash from "../../../assets/icons/eyeslash";
 import clsx from "clsx";
 import { useUser } from "../../../redux/userContext";
+import ChangeTeacherPassword from "../../../api/changeteacherpassword";
 
 const Teacherprofile = ({ }) => {
     const emailRef = useRef(null);
@@ -27,10 +29,30 @@ const Teacherprofile = ({ }) => {
 
     const [isEmpty, setIsEmpty] = useState(0);
     const [loading, setLoading] = useState(false);
-
-    const changePassword = () => {
-        // Your password change logic here
+    
+    const changePassword = async() => {
+        console.log(oldpassword,newpassword);
+        if(oldpassword.trim().length<=0  ){
+            setIsEmpty(1);
+            return;
+        }
+        if(newpassword.trim().length<=5  ){
+            setIsEmpty(2);
+            ToastAndroid.show("Password must contain minimun 6 letters.", ToastAndroid.SHORT)
+            return;
+        }
+        setLoading(true)
+        const Changenewpassword =await ChangeTeacherPassword(oldpassword,newpassword)
+        if(Changenewpassword.error){
+            setLoading(false)
+           return ToastAndroid.show(Changenewpassword.error, ToastAndroid.SHORT)
+        }
+        setLoading(false)
+        ToastAndroid.show(Changenewpassword.message, ToastAndroid.SHORT)
+        setoldPassword("")
+        setnewpassword("")
     };
+
     const [activeTab, setActiveTab] = useState("Profile");
     const { state } = useUser();
     const user = state.user;
@@ -42,12 +64,13 @@ const Teacherprofile = ({ }) => {
     }, [user]);
     return (
         <View className={`flex-1`}>
+            <ScrollView>
             {pageload ? (
                 <View className={`flex justify-center items-center h-full`}>
                     <ActivityIndicator size="large" color="#0000ff" />
                 </View>
             ) : (
-                <View className={`pt-16 px-4 `}>
+                <View className={`py-16 px-4 `}>
                     <View className={`flex-row mb-4 gap-4`}>
                         <TouchableOpacity
                             className={clsx("flex-1 items-center py-2 rounded-lg", activeTab === "Profile" ? `bg-blue-500` : `bg-[#6C6C6C]`)}
@@ -83,9 +106,9 @@ const Teacherprofile = ({ }) => {
                     </View>
 
                     {activeTab == "Profile" ? (
-                        <ScrollView>
-                            <View className={` `}>
-                                <View className={`pt-8 `}>
+                        
+                            <View className={`  `}>
+                                <View className={`pt-8  `}>
                                     <View className="border-[1px] border-[#E2E4E8] px-4 py-5 rounded-xl bg-[#FAFBFD]">
 
                                         <View
@@ -264,7 +287,7 @@ const Teacherprofile = ({ }) => {
                                     </View>
                                 </View>
                             </View>
-                        </ScrollView>
+                        
                     ) : (
                         <View className={`h-full`}>
                             <View
@@ -309,7 +332,7 @@ const Teacherprofile = ({ }) => {
                                             onChangeText={setoldPassword}
                                             value={oldpassword}
                                             className={clsx(`text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                isEmpty === 1 || isEmpty === 3
+                                                isEmpty === 1  
                                                     ? `border-[#F42F4E]`
                                                     : `border-[#EDEEF4]`,)}
                                             style={[
@@ -352,7 +375,7 @@ const Teacherprofile = ({ }) => {
                                             onChangeText={setnewpassword}
                                             value={newpassword}
                                             className={clsx(`text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                isEmpty === 1 || isEmpty === 3
+                                             isEmpty === 2
                                                     ? `border-[#F42F4E]`
                                                     : `border-[#EDEEF4]`,)}
                                             style={[
@@ -394,12 +417,14 @@ const Teacherprofile = ({ }) => {
                                 <Text style={{ color: "white", display: loading ? "none" : "flex", fontFamily: "Matter" }}>
                                     Change Password
                                 </Text>
+                                {loading&&<ActivityIndicator color={"white"} />}
                             </TouchableOpacity>
                         </View>
                     )
                     }
                 </View >
             )}
+            </ScrollView>
         </View >
     );
 };
