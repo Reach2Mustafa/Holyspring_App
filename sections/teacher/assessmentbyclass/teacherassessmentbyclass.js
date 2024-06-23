@@ -18,6 +18,7 @@ import Notavailable from "../../../assets/icons/notavailable";
 import getassessmentbyclass from "../../../api/getassessmentbyclass";
 import { useRoute } from "@react-navigation/native";
 import getassignedassessment from "../../../api/getassignedassessment";
+import getassessmentbyteacheradmin from "../../../api/getassessmentbyteacheradmin";
 
 
 const Teacherassessmentbyclass = ({ }) => {
@@ -31,22 +32,29 @@ const Teacherassessmentbyclass = ({ }) => {
 
     const route = useRoute();
 
-    const { class1 } = route.params;
+    const { class1, id } = route.params;
     useEffect(() => {
         setdate(getFormattedDate());
         const getAssignmentBySubject = async () => {
-            if (class1 == "Assigned") {
-                const data = await getassignedassessment();
+            if (user.usertype == "teacher") {
+                if (class1 == "Assigned") {
+                    const data = await getassignedassessment();
 
-                setsubjectAssignments(data);
+                    setsubjectAssignments(data);
+                }
+                else {
+
+                    const data = await getassessmentbyclass(class1);
+
+                    setsubjectAssignments(data);
+                }
+                setpageload(false);
             }
-            else {
-
-                const data = await getassessmentbyclass(class1);
-
+            else if (user.usertype == "admin") {
+                const data = await getassessmentbyteacheradmin(id);
                 setsubjectAssignments(data);
+                setpageload(false);
             }
-            setpageload(false);
         };
         getAssignmentBySubject();
     }, [user]);

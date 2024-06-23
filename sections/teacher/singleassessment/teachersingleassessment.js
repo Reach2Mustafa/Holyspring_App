@@ -25,6 +25,8 @@ import ArrowLeft from "../../../assets/icons/arrowleft";
 import Assbtn from "../../../assets/icons/assbtn";
 import getassessmentbyIdteacher from "../../../api/getassessmentbyIdteacher";
 import deleteassessmentbyId from "../../../api/deleteassessmentbyId";
+import getassessmentbyIdadmin from "../../../api/getassessmentbyIdadmin";
+import deleteassessmentbyIdadmin from "../../../api/deleteassessmentbyIdadmin";
 const Teachersingleassessment = ({ }) => {
     const pagerRef = useRef(null);
     const [currentpage, setCurrentPage] = useState(0); // State to track the current page
@@ -73,9 +75,19 @@ const Teachersingleassessment = ({ }) => {
     useEffect(() => {
         setdate(getFormattedDate());
         const data = async () => {
-            const d = await getassessmentbyIdteacher(id);
-            setdetails(d);
-            setpageload(false);
+
+            if (user.usertype == "teacher") {
+
+                const d = await getassessmentbyIdteacher(id);
+                setdetails(d);
+                setpageload(false);
+            }
+            if (user.usertype == "admin") {
+
+                const d = await getassessmentbyIdadmin(id);
+                setdetails(d);
+                setpageload(false);
+            }
         };
         if (id) {
             data();
@@ -93,15 +105,33 @@ const Teachersingleassessment = ({ }) => {
         }
     }, [details]);
     const deleteassessment = async () => {
-        const data = await deleteassessmentbyId(id)
-        if (!data.error) {
-            ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
 
-            navigation.navigate("/teacher/home");
+        if (user.usertype == "admin") {
+
+            const data = await deleteassessmentbyIdadmin(id)
+            if (!data.error) {
+                ToastAndroid.show("Assessment Deleted", ToastAndroid.SHORT);
+
+                navigation.goBack()
+            }
+            else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+            }
         }
-        else {
-            ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
 
+        if (user.usertype == "teacher") {
+
+            const data = await deleteassessmentbyId(id)
+            if (!data.error) {
+                ToastAndroid.show("Assessment Deleted", ToastAndroid.SHORT);
+
+                navigation.navigate("/teacher/home");
+            }
+            else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+            }
         }
     }
     return (
@@ -213,7 +243,7 @@ const Teachersingleassessment = ({ }) => {
             {details?.questions && <View className="px-4 pb-4">
 
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
-                    {details.teacher == user._id ?
+                    {details.teacher == user._id || user.usertype == "admin" ?
                         <TouchableOpacity
                             onPress={() => { deleteassessment() }}
                             className={clsx(" rounded-full w-[80px] flex items-center bg-[#F42F52] ",)}
