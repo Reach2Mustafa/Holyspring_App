@@ -28,6 +28,9 @@ import Edit from "../../../assets/icons/edit";
 import Save from "../../../assets/icons/save";
 import Delete from "../../../assets/icons/delete";
 import { router } from "expo-router";
+import gethomeworkbyIdadmin from "../../../api/gethomeworkbyidadmin";
+import deletehomeworkbyIdadmin from "../../../api/deletehomeworkbyidadmin";
+import Edithomeworkadmin from "../../../api/edithomeworkadmin";
 
 const Card = ({ field, details, bg }) => {
     return (
@@ -79,6 +82,11 @@ const Studentsinglehomework = ({ }) => {
                     setdetails(data);
                     setDescription(data?.description)
                 }
+                else if (user.usertype == "admin") {
+                    const data = await gethomeworkbyIdadmin(id)
+                    setdetails(data);
+                    setDescription(data?.description)
+                }
 
                 setPageload(false);
             }
@@ -87,16 +95,31 @@ const Studentsinglehomework = ({ }) => {
     }, [id]);
     const editting = async () => {
         if (description) {
-            const data = await Edithomeworkteacher(id, description)
-            if (!data.error) {
-                setdetails(data);
-                setedit(false)
-                ToastAndroid.show("Homework Updated", ToastAndroid.SHORT);
-            }
-            else {
-                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+            if (user.usertype == "teacher") {
+                const data = await Edithomeworkteacher(id, description)
+                if (!data.error) {
+                    setdetails(data);
+                    setedit(false)
+                    ToastAndroid.show("Homework Updated", ToastAndroid.SHORT);
+                }
+                else {
+                    ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
 
+                }
             }
+            if (user.usertype == "admin") {
+                const data = await Edithomeworkadmin(id, description)
+                if (!data.error) {
+                    setdetails(data);
+                    setedit(false)
+                    ToastAndroid.show("Homework Updated", ToastAndroid.SHORT);
+                }
+                else {
+                    ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+                }
+            }
+
 
         }
         else {
@@ -104,15 +127,29 @@ const Studentsinglehomework = ({ }) => {
         }
     }
     const Delete1 = async () => {
-        const data = await deletehomeworkbyId(id)
-        if (!data.error) {
-            ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
+        if (user.usertype == "teacher") {
+            const data = await deletehomeworkbyId(id)
+            if (!data.error) {
+                ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
 
-            router.navigate("/teacher/home");
+                router.navigate("/teacher/home");
+            }
+            else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+            }
         }
-        else {
-            ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+        if (user.usertype == "admin") {
+            const data = await deletehomeworkbyIdadmin(id)
+            if (!data.error) {
+                ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
 
+                router.back();
+            }
+            else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+
+            }
         }
     }
     return (
@@ -230,6 +267,31 @@ const Studentsinglehomework = ({ }) => {
 
             )}
             {user.usertype == "teacher" && user._id == details?.teacher?._id && <View className="px-4 pb-4">
+
+                <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
+
+
+                    <TouchableOpacity onPress={() => { Delete1() }}><Delete /></TouchableOpacity>
+
+                    {
+                        edit ?
+                            <View className={` flex items-center flex-row gap-4`}>
+
+                                <TouchableOpacity className={` `} onPress={() => { setedit(false) }}>
+                                    <Text className={`text-[16px] text-[#F42F4E] underline `} style={{ fontFamily: "Matter500" }}>Abort</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { editting() }}><Save /></TouchableOpacity>
+                            </View>
+                            :
+                            <TouchableOpacity onPress={() => { setedit(true) }}><Edit /></TouchableOpacity>
+
+                    }
+
+
+                </View>
+            </View>}
+            {user.usertype == "admin" && <View className="px-4 pb-4">
 
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
 
