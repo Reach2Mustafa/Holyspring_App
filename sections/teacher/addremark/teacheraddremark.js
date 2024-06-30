@@ -15,7 +15,7 @@ import { useNavigation } from "expo-router";
 import clsx from "clsx";
 const Card = ({ field, details, bg }) => {
   return (
-    <View className={clsx("flex-row w-full ", bg ? "bg-[#F9FBFC]" : "")} >
+    <View className={clsx("flex-row w-full ", bg ? "bg-[#efefef]" : "")} >
       <Text className="w-28 text-[#737A82] font-medium text-[16px] leading-5" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>{field}</Text>
       <Text className="text-[16px] w-[60%] leading-5" style={{ fontFamily: "Matter", wordBreak: "break-word" }}>{details}</Text>
     </View>

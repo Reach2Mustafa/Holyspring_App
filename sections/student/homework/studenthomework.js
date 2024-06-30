@@ -107,7 +107,7 @@ const Studenthomework = ({ }) => {
                                                     key={item._id}
                                                     onPress={() => { navigation.navigate("student/singlehomework", { id: item._id }) }}
                                                     className={clsx("flex flex-row     text-[#000000] py-6", index === subjectAssignments.length - 1 && `rounded-b-3xl`,
-                                                        index % 2 != 0 && `bg-[#F9FBFC]`)}
+                                                        index % 2 != 0 && `bg-[#efefef]`)}
 
                                                 >
                                                     <View className={`flex flex-row justify-center px-1 w-[30%]`}>

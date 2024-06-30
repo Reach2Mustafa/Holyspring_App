@@ -34,7 +34,7 @@ import Edithomeworkadmin from "../../../api/edithomeworkadmin";
 
 const Card = ({ field, details, bg }) => {
     return (
-        <View className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#F9FBFC]" : "")} >
+        <View className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#efefef]" : "")} >
             <Text className="w-32 text-[#737A82] font-medium text-[16px] leading-5" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>{field}</Text>
             <Text className="text-[16px] w-[60%] leading-5" style={{ fontFamily: "Matter", wordBreak: "break-word" }}>{details}</Text>
         </View>
@@ -152,6 +152,19 @@ const Studentsinglehomework = ({ }) => {
             }
         }
     }
+    const [lastPress, setLastPress] = useState(0);
+    const DOUBLE_PRESS_DELAY = 300; // Double press interval in milliseconds
+
+    const handlePress = () => {
+        const now = Date.now();
+        if (now - lastPress < DOUBLE_PRESS_DELAY) {
+            Delete1();
+        } else {
+
+            ToastAndroid.show("Press one more time to delete", ToastAndroid.SHORT);
+        }
+        setLastPress(now);
+    };
     return (
         <View className={`flex-1 `}>
             {pageload ? (
@@ -178,7 +191,7 @@ const Studentsinglehomework = ({ }) => {
                                 className={`border border-gray-300 my-6 rounded-xl overflow-hidden`}
                             >
 
-                                <View className={`flex-row w-full px-6 py-6 bg-[#F9FBFC]`}>
+                                <View className={`flex-row w-full px-6 py-6 bg-[#efefef]`}>
                                     <Text
                                         className="w-32 text-[#737A82] font-medium text-[16px]"
                                         style={{
@@ -232,7 +245,7 @@ const Studentsinglehomework = ({ }) => {
                                     field="Assigned time:"
                                     details={formatDateAndDay(details?.updatedAt).time}
                                 />
-                                {details?.document && <View className={clsx("flex-row w-full bg-[#F9FBFC] px-6 py-6",)} >
+                                {details?.document && <View className={clsx("flex-row w-full bg-[#efefef] px-6 py-6",)} >
                                     <Text className="w-32 text-[#737A82] font-medium text-[16px]" style={{ fontFamily: "Matter500", wordBreak: "break-word" }}>Attachment</Text>
                                     <Text onPress={() => setFullScreenImage(details?.document.replace("public", "/"))} className="text-[14px] bg-[#205FFF] text-white w-max px-4 py-1.5 pb-2.5 rounded-full " style={{ fontFamily: "Matter", wordBreak: "break-word" }}>
                                         View
@@ -271,7 +284,7 @@ const Studentsinglehomework = ({ }) => {
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
 
 
-                    <TouchableOpacity onPress={() => { Delete1() }}><Delete /></TouchableOpacity>
+                    <TouchableOpacity onPress={() => { handlePress() }}><Delete /></TouchableOpacity>
 
                     {
                         edit ?

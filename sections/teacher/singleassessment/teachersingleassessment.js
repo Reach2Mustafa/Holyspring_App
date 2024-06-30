@@ -134,6 +134,19 @@ const Teachersingleassessment = ({ }) => {
             }
         }
     }
+    const [lastPress, setLastPress] = useState(0);
+    const DOUBLE_PRESS_DELAY = 300; // Double press interval in milliseconds
+
+    const handlePress = () => {
+        const now = Date.now();
+        if (now - lastPress < DOUBLE_PRESS_DELAY) {
+            deleteassessment();
+        } else {
+
+            ToastAndroid.show("Press one more time to delete", ToastAndroid.SHORT);
+        }
+        setLastPress(now);
+    };
     return (
         <View className={`flex-1  h-full`}>
             {pageload ? (
@@ -245,7 +258,7 @@ const Teachersingleassessment = ({ }) => {
                 <View className={`flex  flex-row justify-between  border-[1px] border-[#E4E4E5] rounded-full px-2 py-2 items-center`}>
                     {details.teacher == user._id || user.usertype == "admin" ?
                         <TouchableOpacity
-                            onPress={() => { deleteassessment() }}
+                            onPress={() => { handlePress() }}
                             className={clsx(" rounded-full w-[80px] flex items-center bg-[#F42F52] ",)}
 
                         >

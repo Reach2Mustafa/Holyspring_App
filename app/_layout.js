@@ -11,6 +11,7 @@ import Menu from '../components/menu';
 import { useEffect, useState } from 'react';
 import App from '../App';
 import HamburgerMenu from '../assets/icons/hamburger';
+import Nointernet from '../assets/icons/nointernet';
 
 
 export default function _layout() {
@@ -139,7 +140,8 @@ export default function _layout() {
                         <View
                             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
                         >
-                            <Text>No internet connection</Text>
+                            <Nointernet />
+                            {/* r */}
                         </View>
                     )}
                 </SafeAreaView>

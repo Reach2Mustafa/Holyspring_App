@@ -19,7 +19,7 @@ import { useRoute } from "@react-navigation/native";
 import getStudentassessmentteacher from "../../../api/getstudentassessmentteacher";
 import getStudentassessmentadmin from "../../../api/getstudentassessmentadmin";
 
-const Studentassessment = ({}) => {
+const Studentassessment = ({ }) => {
   const { state } = useUser();
   const [activeTab, setActiveTab] = useState("pending");
   const navigation = useNavigation();
@@ -53,7 +53,7 @@ const Studentassessment = ({}) => {
   const Card = ({ field, details, bg }) => {
     return (
       <View
-        className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#F9FBFC]" : "")}
+        className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#efefef]" : "")}
       >
         <Text
           className="w-32 text-[#737A82] font-medium text-[16px] leading-5"
@@ -109,7 +109,7 @@ const Studentassessment = ({}) => {
               {subjectAssignments ? (
                 <View className={`flex-1 h-full  p-4`}>
                   {subjectAssignments.pending.length > 0 ||
-                  subjectAssignments.submitted.length > 0 ? (
+                    subjectAssignments.submitted.length > 0 ? (
                     <View className={`flex-row mb-4 gap-[16px]`}>
                       <TouchableOpacity
                         className={clsx(
@@ -153,7 +153,7 @@ const Studentassessment = ({}) => {
                   {activeTab === "pending" ? (
                     <View className=" h-full">
                       {subjectAssignments.pending &&
-                      subjectAssignments.pending.length > 0 ? (
+                        subjectAssignments.pending.length > 0 ? (
                         <ScrollView className={`flex-col gap-8 flex py-12 `}>
                           {subjectAssignments.pending
                             .slice()
@@ -164,12 +164,12 @@ const Studentassessment = ({}) => {
                                 className={clsx(
                                   "flex   text-[#000000] overflow-hidden",
                                   index ===
-                                    subjectAssignments.pending.length - 1 &&
-                                    `rounded-xl border-2 border-[#E2E4E8]`,
+                                  subjectAssignments.pending.length - 1 &&
+                                  `rounded-xl border-2 border-[#E2E4E8]`,
                                   index % 2 !== 0 &&
-                                    `border-2 border-[#E2E4E8] rounded-xl `,
+                                  `border-2 border-[#E2E4E8] rounded-xl `,
                                   index % 2 === 0 &&
-                                    `rounded-xl border-2 border-[#E2E4E8]`
+                                  `rounded-xl border-2 border-[#E2E4E8]`
                                 )}
                               >
                                 <Card
@@ -255,7 +255,7 @@ const Studentassessment = ({}) => {
                   ) : (
                     <View>
                       {subjectAssignments.submitted &&
-                      subjectAssignments.submitted.length > 0 ? (
+                        subjectAssignments.submitted.length > 0 ? (
                         <View className={`flex-col gap-8 flex py-12 `}>
                           {subjectAssignments.submitted
                             .slice()
@@ -275,12 +275,12 @@ const Studentassessment = ({}) => {
                                 className={clsx(
                                   "flex   text-[#000000] overflow-hidden",
                                   index ===
-                                    subjectAssignments.submitted.length - 1 &&
-                                    `rounded-xl border-2 border-[#E2E4E8]`,
+                                  subjectAssignments.submitted.length - 1 &&
+                                  `rounded-xl border-2 border-[#E2E4E8]`,
                                   index % 2 !== 0 &&
-                                    `border-2 border-[#E2E4E8] rounded-xl `,
+                                  `border-2 border-[#E2E4E8] rounded-xl `,
                                   index % 2 === 0 &&
-                                    `rounded-xl border-2 border-[#E2E4E8]`
+                                  `rounded-xl border-2 border-[#E2E4E8]`
                                 )}
                               >
                                 <Card

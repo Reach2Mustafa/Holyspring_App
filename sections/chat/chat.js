@@ -268,7 +268,7 @@ const Chating = () => {
                                                         <View
                                                             className={clsx("border p-1 rounded-b-xl", each?.sender === user._id
                                                                 ? `bg-[#EBF1FF] border-[#DDE7FD] rounded-l-xl self-end`
-                                                                : `bg-[#F9FBFC] border-[#EBEEF5] rounded-r-xl self-start`,)}
+                                                                : `bg-[#efefef] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
                                                                 { width: "60%" },
@@ -376,7 +376,7 @@ const Chating = () => {
                                                         <View
                                                             className={clsx("border p-3 rounded-b-xl", each?.sender === user._id
                                                                 ? `bg-[#EBF1FF] border-[#DDE7FD] rounded-l-xl self-end`
-                                                                : `bg-[#F9FBFC] border-[#EBEEF5] rounded-r-xl self-start`,)}
+                                                                : `bg-[#efefef] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
                                                                 { maxWidth: "60%" },

@@ -21,6 +21,7 @@ import { useUser } from "../../../redux/userContext";
 import ChangeTeacherPassword from "../../../api/changeteacherpassword";
 import { useRoute } from "@react-navigation/native";
 import getteacherById from "../../../api/getteacherbyidadmin";
+import ChangeteacherPasswordByadmin from "../../../api/changeteacherpasswordadmin";
 
 const Teacherprofile = ({ }) => {
     const emailRef = useRef(null);
@@ -35,27 +36,25 @@ const Teacherprofile = ({ }) => {
 
     const changePassword = async () => {
         console.log(oldpassword, newpassword);
-        if (oldpassword.trim().length <= 0) {
+        if (oldpassword !== newpassword) {
             setIsEmpty(1);
+            ToastAndroid.show("Please enter same password.", ToastAndroid.SHORT);
             return;
         }
-        if (newpassword.trim().length <= 5) {
-            setIsEmpty(2);
-            ToastAndroid.show("Password must contain minimun 6 letters.", ToastAndroid.SHORT)
-            return;
-        }
-        setLoading(true)
-        const Changenewpassword = await ChangeTeacherPassword(oldpassword, newpassword)
+        setLoading(true);
+        const Changenewpassword = await ChangeteacherPasswordByadmin(
+            id,
+            newpassword
+        );
         if (Changenewpassword.error) {
-            setLoading(false)
-            return ToastAndroid.show(Changenewpassword.error, ToastAndroid.SHORT)
+            setLoading(false);
+            return ToastAndroid.show(Changenewpassword.error, ToastAndroid.SHORT);
         }
-        setLoading(false)
-        ToastAndroid.show(Changenewpassword.message, ToastAndroid.SHORT)
-        setoldPassword("")
-        setnewpassword("")
+        setLoading(false);
+        ToastAndroid.show(Changenewpassword.message, ToastAndroid.SHORT);
+        setoldPassword("");
+        setnewpassword("");
     };
-
     const [activeTab, setActiveTab] = useState("Profile");
     const [user, setuser] = useState()
     const [pageload, setpageload] = useState(true);
@@ -310,12 +309,14 @@ const Teacherprofile = ({ }) => {
                                         lineHeight: "tight",
                                     }}
                                 >
-                                    <Text className=" py-[32px] text-[20px] uppercase" style={{ fontFamily: "Avant", }}>Change Password</Text>
+                                    <Text
+                                        className=" py-[32px] text-[20px] uppercase"
+                                        style={{ fontFamily: "Avant" }}
+                                    >
+                                        Change Password
+                                    </Text>
                                 </View>
-                                <View
-                                    className="flex flex-col gap-[32px] pb-[32px]"
-
-                                >
+                                <View className="flex flex-col gap-[32px] pb-[32px]">
                                     <View className={`flex flex-col gap-[8px]`}>
                                         <View
                                             style={{
@@ -325,7 +326,9 @@ const Teacherprofile = ({ }) => {
                                                 paddingBottom: "8px",
                                             }}
                                         >
-                                            <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>Old Password :</Text>
+                                            <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
+                                                Enter Password:
+                                            </Text>
                                         </View>
                                         <View
                                             onPress={() => {
@@ -340,14 +343,11 @@ const Teacherprofile = ({ }) => {
                                                 ref={passwordRef}
                                                 onChangeText={setoldPassword}
                                                 value={oldpassword}
-                                                className={clsx(`text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                    isEmpty === 1
-                                                        ? `border-[#F42F4E]`
-                                                        : `border-[#EDEEF4]`,)}
-                                                style={[
-
-                                                    { fontSize: 16 },
-                                                ]}
+                                                className={clsx(
+                                                    `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
+                                                    isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
+                                                )}
+                                                style={[{ fontSize: 16 }]}
                                                 placeholder="Password"
                                                 secureTextEntry={!showPassword}
                                             />
@@ -368,7 +368,9 @@ const Teacherprofile = ({ }) => {
                                                 paddingBottom: "8px",
                                             }}
                                         >
-                                            <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>New Password :</Text>
+                                            <Text style={{ fontFamily: "Matter500", fontSize: 18 }}>
+                                                Confirm Password:
+                                            </Text>
                                         </View>
                                         <View
                                             onPress={() => {
@@ -383,14 +385,11 @@ const Teacherprofile = ({ }) => {
                                                 ref={passwordRef}
                                                 onChangeText={setnewpassword}
                                                 value={newpassword}
-                                                className={clsx(`text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
-                                                    isEmpty === 2
-                                                        ? `border-[#F42F4E]`
-                                                        : `border-[#EDEEF4]`,)}
-                                                style={[
-
-                                                    { fontSize: 16 },
-                                                ]}
+                                                className={clsx(
+                                                    `text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.5px] bg-white`,
+                                                    isEmpty === 1 ? `border-[#F42F4E]` : `border-[#EDEEF4]`
+                                                )}
+                                                style={[{ fontSize: 16 }]}
                                                 placeholder="Password"
                                                 secureTextEntry={!showPassword}
                                             />
@@ -423,7 +422,13 @@ const Teacherprofile = ({ }) => {
                                     }}
                                     onPress={changePassword}
                                 >
-                                    <Text style={{ color: "white", display: loading ? "none" : "flex", fontFamily: "Matter" }}>
+                                    <Text
+                                        style={{
+                                            color: "white",
+                                            display: loading ? "none" : "flex",
+                                            fontFamily: "Matter",
+                                        }}
+                                    >
                                         Change Password
                                     </Text>
                                     {loading && <ActivityIndicator color={"white"} />}

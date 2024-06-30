@@ -20,7 +20,7 @@ import getsinglestudentremarkadmin from "../../../api/getstudentremarkadmin";
 const Card = ({ field, details, bg }) => {
   return (
     <View
-      className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#F9FBFC]" : "")}
+      className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#efefef]" : "")}
     >
       <Text
         className="w-32 text-[#737A82] font-medium text-[16px]"

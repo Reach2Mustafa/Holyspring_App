@@ -32,7 +32,7 @@ import getstudentsbystandardadmin from "../../../api/getallstudents";
 const Card = ({ field, details, bg }) => {
   return (
     <View
-      className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#F9FBFC]" : "")}
+      className={clsx("flex-row w-full px-6 py-6", bg ? "bg-[#efefef]" : "")}
     >
       <Text
         className="w-32 text-[#737A82] font-medium text-[16px]"
@@ -50,7 +50,7 @@ const Card = ({ field, details, bg }) => {
   );
 };
 
-const Teacherstudentbyclass = ({}) => {
+const Teacherstudentbyclass = ({ }) => {
   const { state } = useUser();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -83,7 +83,7 @@ const Teacherstudentbyclass = ({}) => {
       console.log(user);
     }
   }, [user]);
-  const navigate = async () => {};
+  const navigate = async () => { };
 
   const filteredAssignments = subjectAssignments?.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -124,7 +124,7 @@ const Teacherstudentbyclass = ({}) => {
                   placeholder="Search by name"
                   value={searchQuery}
                   onChangeText={setSearchQuery}
-                  className="py-2 pl-8  border caret-black border-gray-300 bg-[#F9FBFC] rounded-xl focus:border-[#205FFF] focus:outline-[#205FFF]"
+                  className="py-2 pl-8  border caret-black border-gray-300 bg-[#efefef] rounded-xl focus:border-[#205FFF] focus:outline-[#205FFF]"
                 />
                 <View className="absolute left-2 h-full flex justify-center ">
                   <Search />
@@ -141,11 +141,11 @@ const Teacherstudentbyclass = ({}) => {
                       className={clsx(
                         "flex   text-[#000000] overflow-hidden",
                         index === filteredAssignments.length - 1 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`,
+                        `rounded-xl border-2 border-[#E2E4E8]`,
                         index % 2 !== 0 &&
-                          `border-2 border-[#E2E4E8] rounded-xl `,
+                        `border-2 border-[#E2E4E8] rounded-xl `,
                         index % 2 === 0 &&
-                          `rounded-xl border-2 border-[#E2E4E8]`
+                        `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
                       <TouchableOpacity
