@@ -162,7 +162,7 @@ const Login = () => {
                                 style={{
                                     fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
                                 }}
-                                placeholder="Email"
+                                placeholder="Username"
                                 keyboardType="email-address"
                             />
 

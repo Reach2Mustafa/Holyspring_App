@@ -8,6 +8,7 @@ import {
     ScrollView,
     Modal,
     Image,
+    ToastAndroid,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
@@ -22,6 +23,7 @@ import sendMessage from "../../api/sendMessage";
 import Send from "../../assets/icons/send";
 import Chatattach from "../../assets/icons/chatattach";
 import formatDateAndDay from "../../utils/formatDateAndDay";
+import deletemessagebyidadmin from "../../api/deletemessagebyId";
 
 const Chating = () => {
     const chatContainerRef = useRef(null);
@@ -199,7 +201,31 @@ const Chating = () => {
             setLoading(false);
         }
     };
+    const [lastPress, setLastPress] = useState(0);
+    const DOUBLE_PRESS_DELAY = 300; // Double press interval in milliseconds
+    const Delete1 = async (id) => {
+        if (user.usertype === "admin") {
+            const data = await deletemessagebyidadmin(id);
+            if (!data.error) {
+                ToastAndroid.show("Homework Deleted", ToastAndroid.SHORT);
+    
+                // Remove the item with the specified id from the messages array
+                setMessages((prevMessages) => prevMessages.filter(message => message._id !== id));
+            } else {
+                ToastAndroid.show("Something went wrong try again", ToastAndroid.SHORT);
+            }
+        }
+    };
+    const handlePress = (id) => {
+        const now = Date.now();
+        if (now - lastPress < DOUBLE_PRESS_DELAY) {
+            Delete1(id);
+        } else {
 
+            ToastAndroid.show("Press one more time to delete", ToastAndroid.SHORT);
+        }
+        setLastPress(now);
+    };
     return (
         <View className={`flex-1  h-full`}>
             {pageload ? <View className={`h-full w-full  justify-center items-center`}>
@@ -263,7 +289,7 @@ const Chating = () => {
                                                 imageLoadingStates[imageUri] || {};
 
                                             return (
-                                                <View className={`w-full`} key={index}>
+                                                <TouchableOpacity onPress={()=>{if(user.usertype=="admin"){handlePress(each._id)}}}  className={`w-full`} key={index}>
                                                     {each?.document ? (
                                                         <View
                                                             className={clsx("border p-1 rounded-b-xl", each?.sender === user._id
@@ -271,7 +297,7 @@ const Chating = () => {
                                                                 : `bg-[#efefef] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
-                                                                { width: "60%" },
+                                                                { width: "80%" },
 
                                                                 each?.sender === user._id
                                                                     ? { alignSelf: "flex-end" }
@@ -379,7 +405,7 @@ const Chating = () => {
                                                                 : `bg-[#efefef] border-[#EBEEF5] rounded-r-xl self-start`,)}
                                                             style={[
 
-                                                                { maxWidth: "60%" },
+                                                                { maxWidth: "80%" },
 
                                                                 each?.sender === user._id
                                                                     ? { alignSelf: "flex-end" }
@@ -424,7 +450,7 @@ const Chating = () => {
                                                             </View>
                                                         </View>
                                                     )}
-                                                </View>
+                                                </TouchableOpacity>
                                             );
                                         })}
                                     </View>

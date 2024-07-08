@@ -284,6 +284,20 @@ const Menu = ({ toggleDrawer }) => {
                   </View>
 
                 </Text>
+                <Text
+
+onPress={() => { navigation.navigate("admin/allclass", { callback: "homework" }) }}>
+
+<View className={`flex flex-row items-center gap-2`}>
+  <View>
+    <Homework />
+  </View>
+  <Text className=" text-[19.2px]" style={{ fontFamily: 'Matter500' }}>
+    Homework
+  </Text>
+</View>
+
+</Text>
 
 
 

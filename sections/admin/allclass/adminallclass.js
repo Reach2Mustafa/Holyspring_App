@@ -67,7 +67,12 @@ const Adminallclass = ({ }) => {
                                         }
                                         else if (callback == "chat") {
                                             navigation.navigate("chat", { group: teachingClass })
-                                        } setActiveTab(teachingClass)
+                                        }
+                                        else if (callback == "homework"){
+                                             navigation.navigate("teacher/homeworkbyclass", { class1: teachingClass })
+                                        }
+                                        
+                                        setActiveTab(teachingClass)
                                     }}
                                     key={index}
                                     className={clsx(`p-3 flex justify-center items-center py-[48px]  rounded-lg`,

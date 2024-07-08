@@ -22,10 +22,14 @@ import ChangeTeacherPassword from "../../../api/changeteacherpassword";
 import { useRoute } from "@react-navigation/native";
 import getteacherById from "../../../api/getteacherbyidadmin";
 import ChangeteacherPasswordByadmin from "../../../api/changeteacherpasswordadmin";
+import EditIcon from "../../../assets/icons/editpencil";
+import { useNavigation } from "expo-router";
 
 const Teacherprofile = ({ }) => {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
+  const navigation = useNavigation();
+
     const [oldpassword, setoldPassword] = useState("");
     const [newpassword, setnewpassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -166,6 +170,10 @@ const Teacherprofile = ({ }) => {
                                             >
                                                 Personal information
                                             </Text>
+                                            <TouchableOpacity   onPress={() => { navigation.navigate("admin/editteacher", { id: user._id }) }}>
+
+                                            <EditIcon />
+                                            </TouchableOpacity>
                                         </View>
                                         <View className={`grid grid-cols-2 py-6`}>
                                             <View className={`flex flex-row gap-3 pt-6`}>

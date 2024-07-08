@@ -13,6 +13,7 @@ import clsx from "clsx";
 import formatDateAndDay from "../../../utils/formatDateAndDay";
 import { useRoute } from "@react-navigation/native";
 import gethomeworkbyclass from "../../../api/gethomeworkbyclass";
+import gethomeworkbyclassadmin from "../../../api/homeworkbyclassadmin";
 
 
 
@@ -31,8 +32,15 @@ const Teacherhomeworkbyclass = ({ }) => {
         setdate(getFormattedDate());
         const getHomework = async () => {
             const token = await AsyncStorage.getItem("token");
+let data
+if(user.usertype=="admin"){
+    data = await gethomeworkbyclassadmin(class1);
 
-            const data = await gethomeworkbyclass(class1);
+}
+else if(user.usertype=="teacher"){
+    data = await gethomeworkbyclass(class1);
+
+}
             console.log(data);
             setsubjectAssignments(data);
             setpageload(false);
