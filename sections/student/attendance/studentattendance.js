@@ -18,7 +18,7 @@ import { useRoute } from "@react-navigation/native";
 import getStudentattendanceteacher from "../../../api/getStudentattendanceteacher";
 import getStudentattendanceadmin from "../../../api/getstudentattendaceadmin";
 
-const Studentattendance = ({ }) => {
+const Studentattendance = ({}) => {
   const pagerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState(getFormattedDate());
@@ -37,8 +37,7 @@ const Studentattendance = ({ }) => {
       } else if (user.usertype == "teacher") {
         const data = await getStudentattendanceteacher(id);
         setAttendence(data);
-      }
-      else if (user.usertype == "admin") {
+      } else if (user.usertype == "admin") {
         const data = await getStudentattendanceadmin(id);
         setAttendence(data);
       }
@@ -87,8 +86,8 @@ const Studentattendance = ({ }) => {
               entry.isPresent === null
                 ? "gray"
                 : entry.isPresent
-                  ? "green"
-                  : "red",
+                ? "green"
+                : "red",
           },
           text: {
             color: entry.isLate ? "yellow" : "white",
@@ -135,6 +134,42 @@ const Studentattendance = ({ }) => {
             </View>
 
             <View style={{ display: "flex" }}>
+              <View className={` px-4 py-6 `}>
+                <View className={` flex flex-row justify-between `}>
+                  <TouchableOpacity
+                    className={` flex flex-row gap-1 items-center `}
+                  >
+                    <View
+                      className={` bg-[#35BB3E] rounded-[2px] h-3 w-3 `}
+                    ></View>
+                    <Text> Present </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className={` flex flex-row gap-1 items-center `}
+                  >
+                    <View
+                      className={` bg-[#C0272C] rounded-[2px] h-3 w-3 `}
+                    ></View>
+                    <Text> Absent </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className={` flex flex-row gap-1 items-center `}
+                  >
+                    <View
+                      className={` bg-[#FBFD04] rounded-[2px] h-3 w-3 `}
+                    ></View>
+                    <Text> Late </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className={` flex flex-row gap-1 items-center `}
+                  >
+                    <View
+                      className={` bg-[#0470BC] rounded-[2px] h-3 w-3 `}
+                    ></View>
+                    <Text> Holiday </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
               <PagerView
                 style={{
                   flex: 1,
@@ -187,31 +222,31 @@ const Studentattendance = ({ }) => {
                                 color: entry.holiday
                                   ? "#fff"
                                   : entry.isLate == "yes"
-                                    ? "#fff"
-                                    : entry.isPresent === "present"
-                                      ? "#fff"
-                                      : entry.isPresent === "absent"
-                                        ? "#fff"
-                                        : "#737A82",
+                                  ? "#fff"
+                                  : entry.isPresent === "present"
+                                  ? "#fff"
+                                  : entry.isPresent === "absent"
+                                  ? "#fff"
+                                  : "#737A82",
                                 borderColor: entry.holiday
                                   ? "#0470BC"
                                   : entry.isLate == "yes"
-                                    ? "#FBFD04"
-                                    : entry.isPresent === "present"
-                                      ? "#35BB3E"
-                                      : entry.isPresent === "absent"
-                                        ? "#C0272C"
-                                        : "#EAEAEE",
+                                  ? "#FBFD04"
+                                  : entry.isPresent === "present"
+                                  ? "#35BB3E"
+                                  : entry.isPresent === "absent"
+                                  ? "#C0272C"
+                                  : "#EAEAEE",
 
                                 backgroundColor: entry.holiday
                                   ? "#0470BC"
                                   : entry.isLate == "yes"
-                                    ? "#FBFD04"
-                                    : entry.isPresent === "present"
-                                      ? "#35BB3E"
-                                      : entry.isPresent === "absent"
-                                        ? "#C0272C"
-                                        : "#fff",
+                                  ? "#FBFD04"
+                                  : entry.isPresent === "present"
+                                  ? "#35BB3E"
+                                  : entry.isPresent === "absent"
+                                  ? "#C0272C"
+                                  : "#fff",
                               }}
                             >
                               {entryIndex + 1}
