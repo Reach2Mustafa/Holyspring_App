@@ -44,20 +44,38 @@ const TeacherAddRemark = ({}) => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const route = useRoute();
+  
   const navigation = useNavigation();
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [fullScreenImage, setFullScreenImage] = useState(null);
   const [file, Setfile] = useState();
-
+  const [loadingImage, setLoadingImage] = useState(false);
+ 
   const { id, student } = route.params;
 
+  const checkPermissions = async () => {
+    const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      requestPermissions();
+    }
+  };
+
+  const requestPermissions = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission required",
+        "Please grant permission to access the media library to select an image."
+      );
+    }
+  };
   const pickImage = async () => {
     const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
     if (status !== "granted") {
       requestPermissions();
       return;
     }
-
+    setLoadingImage(true);
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -69,6 +87,7 @@ const TeacherAddRemark = ({}) => {
       Setfile(result.assets[0]);
       setSelectedImageFile(result.assets[0].uri); // Correctly set the selected image file
     }
+    setLoadingImage(false); // Stop loading once the URL is ready
   };
 
   const handleSubmit = async () => {
@@ -79,7 +98,7 @@ const TeacherAddRemark = ({}) => {
 
     // You can include image handling here if needed
 
-    const data = await AddRemarkapi(description, id, file);
+    const data = await AddRemarkapi(description, id, selectedImageFile);
     console.log(file.uri);
     console.log(data, "kkkkkkkkkkkkkkkkkkkkkk");
     if (data) {
@@ -88,7 +107,12 @@ const TeacherAddRemark = ({}) => {
     }
     setLoading(false);
   };
-
+  useEffect(() => {
+  
+     
+      checkPermissions();
+  
+  }, []);
   return (
     <View className="flex-1">
       <ScrollView>
