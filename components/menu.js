@@ -56,13 +56,18 @@ const Menu = ({ toggleDrawer }) => {
                 <View>
                   <Homework />
                 </View>
+                <Text
+                  className="text-[18px]"
+                  style={{ fontFamily: "Matter500", color: "#16191D" }}
+                >
+                  Homework
+                </Text>
                 {user.unreadHomework > 0 && (
-                  <Text
-                    className="text-[18px]"
-                    style={{ fontFamily: "Matter500", color: "#16191D" }}
-                  >
-                    {user.unreadHomework}
-                  </Text>
+                  <View className=" h-5 w-5 rounded-full flex flex-row justify-center items-center bg-blue-400">
+                    <Text className={"  text-[12px] text-white text-center  "}>
+                      {user.unreadHomework}
+                    </Text>
+                  </View>
                 )}
               </View>
             </Link>
@@ -97,11 +102,6 @@ const Menu = ({ toggleDrawer }) => {
                 >
                   Attendance
                 </Text>
-                <View className=" h-5 w-5 rounded-full flex flex-row justify-center items-center bg-blue-400">
-                  <Text className={"  text-[12px] text-white text-center  "}>
-                    1
-                  </Text>
-                </View>
               </View>
             </Link>
             <Link href={"/student/remark"}>
