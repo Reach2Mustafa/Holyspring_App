@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Modal,
+  Image,
 } from "react-native";
 import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
@@ -17,6 +19,7 @@ import formatDateAndDay from "../../../utils/formatDateAndDay";
 import getsinglestudentremark from "../../../api/getsinglestudentremark";
 import { useNavigation } from "expo-router";
 import getsinglestudentremarkadmin from "../../../api/getstudentremarkadmin";
+import { IMAGE_BASE_URL } from "../../../api/variables";
 const Card = ({ field, details, bg }) => {
   return (
     <View
@@ -37,18 +40,16 @@ const Card = ({ field, details, bg }) => {
     </View>
   );
 };
-const Studentremark = ({ }) => {
+const Studentremark = ({}) => {
   const [remark, setremark] = useState();
   const { state } = useUser();
   const navigation = useNavigation();
-
   const user = state.user;
   const [date, setdate] = useState();
   const [pageload, setpageload] = useState(true);
   const route = useRoute();
-
+  const [fullScreenImage, setFullScreenImage] = useState(null);
   const { id, student } = route.params;
-  console.log(id, "idddddd");
 
   useEffect(() => {
     setdate(getFormattedDate());
@@ -63,8 +64,7 @@ const Studentremark = ({ }) => {
         const data = await getsinglestudentremark(id);
         setremark(data);
         setpageload(false);
-      }
-      else if (user.usertype == "admin") {
+      } else if (user.usertype == "admin") {
         setpageload(true);
         const data = await getsinglestudentremarkadmin(id);
         setremark(data);
@@ -119,11 +119,11 @@ const Studentremark = ({ }) => {
                       className={clsx(
                         `flex text-[#000000] overflow-hidden`,
                         index === remark.length - 1 &&
-                        `rounded-xl border-2 border-[#E2E4E8]`,
+                          `rounded-xl border-2 border-[#E2E4E8]`,
                         index % 2 !== 0 &&
-                        `border-2 border-[#E2E4E8] rounded-xl`,
+                          `border-2 border-[#E2E4E8] rounded-xl`,
                         index % 2 === 0 &&
-                        `rounded-xl border-2 border-[#E2E4E8]`
+                          `rounded-xl border-2 border-[#E2E4E8]`
                       )}
                     >
                       <Card field="Remark:" details={item?.remark} bg={true} />
@@ -138,6 +138,57 @@ const Studentremark = ({ }) => {
                         field="Remark time:"
                         details={formatDateAndDay(item?.updatedAt).time}
                       />
+                      {item?.remarkpic && (
+                        <View
+                          className={clsx(
+                            "flex-row w-full items-center bg-[#efefef] px-6 py-6"
+                          )}
+                        >
+                          <Text
+                            className="w-32 text-[#737A82] font-medium text-[16px]"
+                            style={{
+                              fontFamily: "Matter500",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            Attachment:
+                          </Text>
+                          <Text
+                            onPress={() =>
+                              setFullScreenImage(
+                                item?.remarkpic.replace("public", "/")
+                              )
+                            }
+                            className="text-[14px] bg-[#205FFF] text-white w-max px-4 py-1.5 pb-2.5 rounded-full "
+                            style={{
+                              fontFamily: "Matter",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            View
+                          </Text>
+                        </View>
+                      )}
+                      <Modal
+                        visible={fullScreenImage !== null}
+                        transparent={true}
+                      >
+                        <View className="flex-1 justify-center items-center bg-black">
+                          <TouchableOpacity
+                            className="absolute top-4 right-4 z-10"
+                            onPress={() => setFullScreenImage(null)}
+                          >
+                            <Text className="text-white text-lg">&#10005;</Text>
+                          </TouchableOpacity>
+                          <Image
+                            source={{
+                              uri: IMAGE_BASE_URL + fullScreenImage,
+                            }}
+                            style={{ width: "100%", height: "100%" }}
+                            resizeMode="contain"
+                          />
+                        </View>
+                      </Modal>
                     </View>
                   ))}
               </View>
