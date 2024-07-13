@@ -37,14 +37,14 @@ const Menu = ({ toggleDrawer }) => {
     <View>
       {user?.usertype == "student" ? (
         <View className=" flex h-full py-[32px] px-[16px] flex-col justify-between">
-          <View className="flex flex-col gap-[16px] ">
+          <View className=" space-y-4 divide-y divide-zinc-500 ">
             <Link href={"/student/home"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row items-center gap-2 ">
                 <View>
                   <Dashboard />
                 </View>
                 <Text
-                  className="text-[18px]"
+                  className="text-[18px] "
                   style={{ fontFamily: "Matter500", color: "#16191D" }}
                 >
                   Dashboard
@@ -52,7 +52,7 @@ const Menu = ({ toggleDrawer }) => {
               </View>
             </Link>
             <Link href={"/student/homework"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Homework />
                 </View>
@@ -65,20 +65,25 @@ const Menu = ({ toggleDrawer }) => {
               </View>
             </Link>
             <Link href={"/student/assessment"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Assessment />
                 </View>
                 <Text
-                  className="text-[18px]"
+                  className="text-[18px] leading-none"
                   style={{ fontFamily: "Matter500", color: "#16191D" }}
                 >
-                  Assessment
+                  Assessment{" "}
                 </Text>
+                <View className=" h-5 w-5 rounded-full flex flex-row justify-center items-center bg-blue-400">
+                  <Text className={"  text-[12px] text-white text-center  "}>
+                    1
+                  </Text>
+                </View>
               </View>
             </Link>
             <Link href={"/student/attendence"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Attendence />
                 </View>
@@ -88,10 +93,15 @@ const Menu = ({ toggleDrawer }) => {
                 >
                   Attendance
                 </Text>
+                <View className=" h-5 w-5 rounded-full flex flex-row justify-center items-center bg-blue-400">
+                  <Text className={"  text-[12px] text-white text-center  "}>
+                    1
+                  </Text>
+                </View>
               </View>
             </Link>
             <Link href={"/student/remark"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Remark />
                 </View>
@@ -108,7 +118,7 @@ const Menu = ({ toggleDrawer }) => {
                 navigation.navigate("chat", { group: user?.class });
               }}
             >
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Chat />
                 </View>
@@ -121,7 +131,7 @@ const Menu = ({ toggleDrawer }) => {
               </View>
             </Text>
             <Link href={"/student/profile"}>
-              <View className="flex flex-row   items-center gap-2 ">
+              <View className="flex flex-row    items-center gap-2 ">
                 <View>
                   <Profile />
                 </View>
@@ -161,7 +171,7 @@ const Menu = ({ toggleDrawer }) => {
       ) : user?.usertype == "teacher" ? (
         <View className=" flex h-full py-[32px] px-[16px] flex-col justify-between">
           <ScrollView>
-            <View className="flex flex-col gap-[16px] pb-10 ">
+            <View className="space-y-4 divide-y divide-zinc-500 pb-10 ">
               <Link href={"/teacher/home"}>
                 <View className="flex flex-row   items-center gap-2 ">
                   <View>
@@ -292,7 +302,7 @@ const Menu = ({ toggleDrawer }) => {
         </View>
       ) : (
         <View className=" flex h-full py-[32px] px-[16px] flex-col justify-between">
-          <View className="flex flex-col gap-[16px] ">
+          <View className="space-y-4 divide-y divide-zinc-500">
             <Link href={"/admin/home"}>
               <View className="flex flex-row   items-center gap-2 ">
                 <View>
