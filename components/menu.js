@@ -407,6 +407,19 @@ const Menu = ({ toggleDrawer }) => {
                 </Text>
               </View>
             </Link>
+            <Link href={"/admin/notice"}>
+              <View className="flex flex-row   items-center gap-2 ">
+                <View>
+                  <Profile />
+                </View>
+                <Text
+                  className="text-[18px]"
+                  style={{ fontFamily: "Matter500", color: "#16191D" }}
+                >
+                  Notice
+                </Text>
+              </View>
+            </Link>
           </View>
           <View className={`w-full`}>
             <TouchableOpacity
