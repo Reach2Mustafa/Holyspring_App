@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import getallnotices from "../../../api/getallnotices";
+
 import { useNavigation } from "expo-router";
 import clsx from "clsx";
+import getallnotices from "../../api/getallnotices";
+import { useUser } from "../../redux/userContext";
+import getFormattedDate from "../../utils/getFormattedDate";
 
 const Notice = () => {
   const [notices, setnotices] = useState();
-  const navigation = useNavigation();
+  const [date, Setdate] = useState(getFormattedDate());
 
+  const navigation = useNavigation();
+const {state}=useUser()
+const user=state.user;
   useEffect(() => {
     const getNotices = async () => {
       const response = await getallnotices();
@@ -23,19 +29,30 @@ const Notice = () => {
   return (
     <View className=" flex flex-col justify-between h-full ">
       <ScrollView>
-        <View className=" p-6 w-full border-b border-gray-300 ">
-          <Text
-            style={{
-              fontFamily: "Avant",
-              fontFeatures: [{ salt: 1 }],
-              textTransform: "uppercase",
-              fontWeight: "bold",
-              fontSize: 20,
-            }}
-          >
-            Notice
-          </Text>
-        </View>
+      <View className={`w-full sticky top-0  border-b border-gray-300`}>
+            <View className={`w-full border-b border-gray-300`}>
+              <View className={`p-6`}>
+                <Text
+                  style={{
+                    fontFamily: "Avant",
+                    fontFeatures: [{ salt: 1 }],
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                    fontSize: 20,
+                  }}
+                >
+                 Notice
+                </Text>
+
+                <Text
+                  className={"text-gray-600 text-base"}
+                  style={{ fontFamily: "Matter" }}
+                >
+                  {date}
+                </Text>
+              </View>
+            </View>
+          </View>
         <View className="p-6 grid gap-6 w-full">
           {notices?.map((notice) => (
             <View className={"p-5 w-full border rounded-xl border-gray-300"}>
@@ -52,23 +69,21 @@ const Notice = () => {
           ))}
         </View>
       </ScrollView>
-      <View className=" sticky bottom-2 right-0 w-full flex items-end px-6 ">
+      {user.usertype == "admin" && (
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("admin/addnotice");
-          }}
-          className={clsx(
-            `p-3 flex justify-center w-[100px] bg-blue-500 items-center rounded-xl`
-          )}
+        onPress={() => {
+          navigation.navigate("admin/addnotice");
+        }}
+          className=" bg-blue-600 absolute bottom-5 right-5 h-[50px] w-[50px] flex justify-center items-center rounded-full "
         >
-          <Text
-            className="text-[18px] text-white"
-            style={[{ fontFamily: "Avant" }]}
-          >
-            Add
-          </Text>
+          <View>
+            <Text className=" text-white text-[35px] leading-[35px] font-Matter font-medium text-center  ">
+              +
+            </Text>
+          </View>
         </TouchableOpacity>
-      </View>
+      )}
+     
     </View>
   );
 };

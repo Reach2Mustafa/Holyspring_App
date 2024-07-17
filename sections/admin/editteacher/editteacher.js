@@ -63,7 +63,7 @@ const Editteacher = ({ }) => {
 
               setClassteacher(data.classteacher)
           }
-
+          setpageload(false)
             // setpageload(false);
         }
         if (id) {
@@ -143,7 +143,7 @@ const Editteacher = ({ }) => {
     const [details, setdetails] = useState();
 
     useEffect(() => {
-        setpageload(false)
+      
         setdate(getFormattedDate());
 
     }, [user]);

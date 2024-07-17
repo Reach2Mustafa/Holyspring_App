@@ -7,10 +7,10 @@ const getpushtoken = async (id) => {
     authorization: `Bearer ${token}`,
   };
   const requestData = {
-    token: id
+    expotoken: id
 };
   try {
-    const response = await axiosInstance.post(`/notification/getstudentpushtoken`,requestData, {
+    const response = await axiosInstance.post(`/notification/getpushtoken`,requestData, {
       headers,
     });
 
