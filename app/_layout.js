@@ -107,9 +107,9 @@ export default function _layout() {
                         &#10005;
                       </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                 
                       <Menu toggleDrawer={toggleDrawer} />
-                    </TouchableOpacity>
+                   
                   </SafeAreaView>
                 </Animated.View>
                 {drawerOpen || drawer ? (

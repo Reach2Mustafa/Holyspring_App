@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { useNavigation } from "expo-router";
 import clsx from "clsx";
@@ -10,7 +10,7 @@ import getFormattedDate from "../../utils/getFormattedDate";
 const Notice = () => {
   const [notices, setnotices] = useState();
   const [date, Setdate] = useState(getFormattedDate());
-
+const[pageload,setpageload]=useState(true)
   const navigation = useNavigation();
 const {state}=useUser()
 const user=state.user;
@@ -18,6 +18,7 @@ const user=state.user;
     const getNotices = async () => {
       const response = await getallnotices();
       setnotices(response);
+      setpageload(false)
     };
     getNotices();
   }, []);
@@ -26,6 +27,13 @@ const user=state.user;
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+  if(pageload){
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return (
     <View className=" flex flex-col justify-between h-full ">
       <ScrollView>
@@ -53,6 +61,7 @@ const user=state.user;
               </View>
             </View>
           </View>
+  
         <View className="p-6 grid gap-6 w-full">
           {notices?.map((notice) => (
             <View className={"p-5 w-full border rounded-xl border-gray-300"}>
@@ -68,6 +77,7 @@ const user=state.user;
             </View>
           ))}
         </View>
+
       </ScrollView>
       {user.usertype == "admin" && (
         <TouchableOpacity
