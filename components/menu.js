@@ -433,6 +433,32 @@ const Menu = ({ toggleDrawer }) => {
                 </Text>
               </View>
             </Link>
+            <Link href={"admin/addstudent"}>
+              <View className="flex flex-row   items-center gap-2 ">
+                <View>
+                  <Profile />
+                </View>
+                <Text
+                  className="text-[18px]"
+                  style={{ fontFamily: "Matter500", color: "#16191D" }}
+                >
+                  Add Student
+                </Text>
+              </View>
+            </Link>
+            <Link href={"admin/addholiday"}>
+              <View className="flex flex-row   items-center gap-2 ">
+                <View>
+                  <Attendence />
+                </View>
+                <Text
+                  className="text-[18px]"
+                  style={{ fontFamily: "Matter500", color: "#16191D" }}
+                >
+                  Add Holiday
+                </Text>
+              </View>
+            </Link>
             <Link href={"/notice"}>
               <View className="flex flex-row   items-center gap-2 ">
                 <View>
