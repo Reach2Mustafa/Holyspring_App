@@ -213,7 +213,7 @@ const Teacherprofile = ({ }) => {
                                                 </View>
                                                 <View className={`text-[15.2px]`}>
                                                     <View
-                                                        className={`gap-1`}
+                                                        className={`gap-1 w-[200px]`}
                                                         style={{
 
                                                             display: "flex",
@@ -225,7 +225,7 @@ const Teacherprofile = ({ }) => {
                                                         {user?.teachingclass?.map((teachingClass, index) => (
                                                             <Text
                                                                 key={index}
-                                                                className="text-[#2E303A] font-semibold text-[16px]"
+                                                                className="text-[#2E303A]  font-semibold text-[16px]"
                                                                 style={{
 
                                                                     fontFamily: "Matter500",
@@ -251,7 +251,7 @@ const Teacherprofile = ({ }) => {
                                                 </View>
                                                 <View className={`text-[15.2px]`}>
                                                     <View
-                                                        className={`gap-1`}
+                                                        className={`gap-1 w-[200px]`}
                                                         style={{
 
                                                             display: "flex",
@@ -263,7 +263,7 @@ const Teacherprofile = ({ }) => {
                                                         {user?.subjects?.map((teachingClass, index) => (
                                                             <Text
                                                                 key={index}
-                                                                className="text-[#2E303A] font-semibold text-[16px]"
+                                                                className="text-[#2E303A]  font-semibold text-[16px]"
                                                                 style={{
 
                                                                     fontFamily: "Matter500",

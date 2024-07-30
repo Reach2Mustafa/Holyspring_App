@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
   },
   measureContent: {
     position: "absolute",
-    top: -1000, // Move it out of view
+    top: -10000000, // Move it out of view
     left: 0,
     right: 0,
   },

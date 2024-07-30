@@ -74,18 +74,18 @@ const Dashboard = ({ }) => {
                         </View>
                         <View className={`py-4  flex flex-col gap-4 h-max`}>
                             <TouchableOpacity>
-                                <View className={`flex-1 px-4`}>
+                                <View className={`flex-1 overflow-hidden px-4`}>
 
                                     <View className="h-full w-full p-6 rounded-3xl border border-[#F1F1F1] bg-[#FAFAFC] flex flex-col justify-between">
                                         <Text className="font-medium pb-4 text-lg leading-none" style={{ fontFamily: "Matter500" }}>Basic Info</Text>
                                         <View style={styles.dataContainer}>
                                             <Text style={styles.dataLabel}>Classes:</Text>
-                                            <Text style={styles.dataValue}>
+                                         
                                                 <View
-                                                    className="  gap-1"
+                                                    className="   max-w-[200px]  gap-1"
                                                     style={{
-
-                                                        display: "flex",
+                                                        wordbreak: "break-word",
+                                                        display: "flex ",
                                                         flexDirection: "row",
                                                         flexWrap: "wrap",
                                                     }}
@@ -100,11 +100,11 @@ const Dashboard = ({ }) => {
 
                                                             }}
                                                         >
-                                                            {teachingClass}
+                                                            {teachingClass} 
                                                         </Text>
                                                     ))}
                                                 </View>
-                                            </Text>
+                                           
                                         </View>
                                         <View style={styles.dataContainer}>
                                             <Text style={styles.dataLabel}>Subjects</Text>
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     dataContainer: {
+        width:"100%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 8,

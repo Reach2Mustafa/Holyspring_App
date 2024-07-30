@@ -142,7 +142,7 @@ const Studentattendance = ({}) => {
                     <View
                       className={` bg-[#35BB3E] rounded-[2px] h-3 w-3 `}
                     ></View>
-                    <Text> Present </Text>
+                    <Text style={{fontfamily:"Matter500"}}> Present </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     className={` flex flex-row gap-1 items-center `}
@@ -150,7 +150,7 @@ const Studentattendance = ({}) => {
                     <View
                       className={` bg-[#C0272C] rounded-[2px] h-3 w-3 `}
                     ></View>
-                    <Text> Absent </Text>
+                    <Text style={{fontfamily:"Matter500"}}> Absent </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     className={` flex flex-row gap-1 items-center `}
@@ -158,7 +158,7 @@ const Studentattendance = ({}) => {
                     <View
                       className={` bg-[#FBFD04] rounded-[2px] h-3 w-3 `}
                     ></View>
-                    <Text> Late </Text>
+                    <Text style={{fontfamily:"Matter500"}}> Late/Half-day </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     className={` flex flex-row gap-1 items-center `}
@@ -166,7 +166,7 @@ const Studentattendance = ({}) => {
                     <View
                       className={` bg-[#0470BC] rounded-[2px] h-3 w-3 `}
                     ></View>
-                    <Text> Holiday </Text>
+                    <Text style={{fontfamily:"Matter500"}}> Holiday </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -180,7 +180,7 @@ const Studentattendance = ({}) => {
                 ref={pagerRef}
                 scrollEnabled={false}
               >
-                {Object.keys(attendence).map((month, index) => (
+                {Object.keys(attendence).slice().reverse().map((month, index) => (
                   <View key={index} className={` w-[100%] p-4   `}>
                     <View
                       className={`border-[1px] border-[#E2E4E8] py-[12px] rounded-xl w-[100%]  `}

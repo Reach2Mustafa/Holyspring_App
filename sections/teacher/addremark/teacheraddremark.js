@@ -99,8 +99,8 @@ const TeacherAddRemark = ({}) => {
     // You can include image handling here if needed
 
     const data = await AddRemarkapi(description, id, selectedImageFile);
-    console.log(file.uri);
-    console.log(data, "kkkkkkkkkkkkkkkkkkkkkk");
+ 
+    console.log(data, "mmmkjboi");
     if (data) {
       ToastAndroid.show("Remark Added", ToastAndroid.SHORT);
       navigation.navigate("teacher/home");

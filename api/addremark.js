@@ -37,7 +37,7 @@ const AddRemarkapi = async (description, id, file) => {
     return response.data;
   } catch (error) {
     console.log("Error sending message:", error);
-    return null;
+    return error;
   }
 };
 

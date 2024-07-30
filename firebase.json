@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "holyspring-85888",
+  "private_key_id": "1b6075094cf60537f5e281b4d6234e1cd9549d3d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCcO2/fN99R04Cp\nEm+10gccLIeIQNKouU9u/V1WiuJU958Ckk6JukfGbJDIZk15tafrO+jEsAULI6+5\njfC9Na248XbLxzfIMTHSkzCi7Wsi1wUWeJopDQYYgAKk9lK5vn9uj8Izv1ZFBQxI\nt7oJdkfDkqat2VjIiHPAKSBHtffwohzohAik4w3HhLIFffBn7IpTWBLdSBq1xgPZ\ncHoSKsB+K/pZ0IVcVLBidE/Qy5R/M40CuoSzqP3sieJPbbZFo3ZXxfLWE9sVyIuG\n8Wpr7ZzNYUCjVPHIEe0NpovJH9pljrX+uqwgAD2X40uhf3V0c084o3aY9YXKpeHH\nkDEYnGTTAgMBAAECggEANens+UL2te4fADl0g3IvMfHL86ErET6hwtN8WlkjMd8h\n6GlE4RJ/omHktMNZCR8/C1ZpRTbZBrcR9R6ebS0Q/jmVnUzqWxNe9iQFLLRxvFwn\nTVHhITl1WQ8T2omGksLChwzlH6ZvxvGvA4kjkhBXQ45gJq5SjSFJkI6grR6GqWs9\nqTm/zLQ1830cWT/e6GpuaStnnUkzi66svfar8RXjCNfWYW9/NnR2A9FsfEr5vWHA\nngIalc5PggO1mnnbvfFAulqHiCHKUH4Tot7e+26T983MCf9fuo4fxZJUlQX1QwV8\nznw+JHEuOWxM+7b5knmzNCU86YjYlQVXdlEvzxkSgQKBgQDau8JmacuicYrCnQqU\nA08uf6rXeOKCMif0JWlIJaQAYeXrHCy3GwGoBlWu7zNsv/nEenJsvdYWHsnwha7F\nT3ehlHVL5S6DBOXNQh7IKmjJeGJBd4lWQcFsir8yBTebIQERzvI+9n3brLzPigPb\nlL1rFvv+mWos/ua8fAq3oOREywKBgQC22aIb3TsRavNTlK83Wka144DZ2zI90ByP\n97mRSA6gnI7f9Nt9aZR0Hhh3nSP+uKqMIndyhEHdv5Yz6f1apFfbJsxrga3OTi/w\nsowpKEgR1WIzsgzg3kSc52V4SiwMF8mudwnBR8MwoIEO4b0acjEpyvzZuKozyGtr\n+jIA72xnGQKBgQCwODprBerf6XewSJLgIjZlsMczpxldaQkVQhqq3GBfSn/QRbek\noSZZdxkKwX19rMCN0VRkVSCoW4+3rgvavKYV0CQby/0H4yc8kXt5KemX/tuyAJrt\nmjY5uyJEKz3cRd+1uDMkFLPbCjRnQ7rN6ewc3byRJooKzCWaTpjXzdB5twKBgGQd\nVxggklXgFCiAMUuCX1L5pLQjwyd7Chh9j5oPNQsVjVjsLT1GkKTfUZA0dt/h5mdh\n+7q01Yd/fdMg27pEX2I7pRN75lkeEDue1wU16/fvuJwLceexaynpvHIXUnSwlZmz\nzaCJFUNLrj4itTKEsYxrevQOmwpNQxvU2ooOjXEJAoGBAK080c6E2ToWGpjWJf2n\nFTDZZCBAuA9cD8Xtix11R+kriUAZlRDOUgrdiyQvzP+o976CWx3Af/weeXKmMBZe\nFa9xbye85GI4L0Ah8xjHQOXTuzGwpVKQnkOZiCSS+xI2G+YFBU8ULBSPsmL9Dw1B\nJUq0UDe5iWc88yrV/oQZI2wS\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-n4da0@holyspring-85888.iam.gserviceaccount.com",
+  "client_id": "114322900662458410230",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-n4da0%40holyspring-85888.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
