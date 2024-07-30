@@ -121,7 +121,7 @@ const Adminaddstudent = ({ }) => {
 
     const Submit = async () => {
         setLoading(true)
-        if(!classteacher){
+        if (!classteacher) {
             ToastAndroid.show("Please select a class ", ToastAndroid.SHORT);
             return;
         }
@@ -132,23 +132,25 @@ const Adminaddstudent = ({ }) => {
                 password: password,
                 class: classteacher,
                 grade: classteacher.slice(0, -1),
-                section:classteacher.split("").pop(),
-                phone:phone
-               
-               
+                section: classteacher.split("").pop(),
+                phone: phone
+
+
             });
             const addteacher = await Addstudent({
                 name: name,
-                rollno: classteacher+"-"+email,
+                rollno: classteacher + "-" + email,
                 password: password,
                 class: classteacher,
                 grade: classteacher.slice(0, -1),
-                section:classteacher.split("").pop(),
-                phone:phone
-               
-               
+                section: classteacher.split("").pop(),
+                phone: phone
+
+
             })
             if (addteacher.error) {
+                setLoading(false)
+
                 ToastAndroid.show(addteacher.error, ToastAndroid.SHORT);
                 return;
             }
@@ -179,26 +181,26 @@ const Adminaddstudent = ({ }) => {
         setClassteacher((prevClassteacher) => prevClassteacher === teachingClass ? null : teachingClass);
     };
 
- <View>
-                                            <Text className=" p-2" style={{ fontSize: 16, fontFamily: "Matter500" }}>Phone</Text>
+    <View>
+        <Text className=" p-2" style={{ fontSize: 16, fontFamily: "Matter500" }}>Phone</Text>
 
-                                            <TextInput
-                                                onPress={() => {
-                                                    setIsEmpty(0);
-                                                }}
-                                                ref={emailRef}
-                                                onChangeText={setphone}
-                                                value={phone}
-                                                className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
-                                                    : `border-[#EDEEF4]`,)}
-                                                style={{
-                                                    fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
-                                                }}
+        <TextInput
+            onPress={() => {
+                setIsEmpty(0);
+            }}
+            ref={emailRef}
+            onChangeText={setphone}
+            value={phone}
+            className={clsx("text-[#858585] px-3  border-[1px]  active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.5px] bg-white", isEmpty === 1 || isEmpty === 2 ? `border-[#F42F4E]`
+                : `border-[#EDEEF4]`,)}
+            style={{
+                fontSize: 16, fontFamily: "Matter", // Set the font size explicitly
+            }}
 
-                                                placeholder="Phone"
-                                                keyboardType="number-pad"
-                                            />
-                                        </View>
+            placeholder="Phone"
+            keyboardType="number-pad"
+        />
+    </View>
 
     return (
         <View className={`flex-1  h-full`}>

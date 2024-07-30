@@ -292,18 +292,18 @@ const Menu = ({ toggleDrawer }) => {
                 </View>
               </Link>
               <Link href={"/notice"}>
-              <View className="flex flex-row   items-center gap-2 ">
-                <View>
-                  <Profile />
+                <View className="flex flex-row   items-center gap-2 ">
+                  <View>
+                    <Profile />
+                  </View>
+                  <Text
+                    className="text-[18px]"
+                    style={{ fontFamily: "Matter500", color: "#16191D" }}
+                  >
+                    Notice
+                  </Text>
                 </View>
-                <Text
-                  className="text-[18px]"
-                  style={{ fontFamily: "Matter500", color: "#16191D" }}
-                >
-                  Notice
-                </Text>
-              </View>
-            </Link>
+              </Link>
             </View>
           </ScrollView>
           <View className={`w-full pt-20 `}>
@@ -469,6 +469,19 @@ const Menu = ({ toggleDrawer }) => {
                   style={{ fontFamily: "Matter500", color: "#16191D" }}
                 >
                   Notice
+                </Text>
+              </View>
+            </Link>
+            <Link href={"admin/notification"}>
+              <View className="flex flex-row   items-center gap-2 ">
+                <View>
+                  <Assessment />
+                </View>
+                <Text
+                  className="text-[18px]"
+                  style={{ fontFamily: "Matter500", color: "#16191D" }}
+                >
+                  Notification
                 </Text>
               </View>
             </Link>

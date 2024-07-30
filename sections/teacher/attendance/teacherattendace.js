@@ -133,7 +133,7 @@ const Teacherattendance = ({ }) => {
                             >
 
 
-                                {Object.keys(attendence)?.map((month, index) => (
+                                {Object.keys(attendence)?.slice().reverse().map((month, index) => (
                                     <View key={index} className={` w-[100%] p-4   `}>
                                         <View className={`border-[1px] border-[#E2E4E8] py-[12px] rounded-xl w-[100%]  `}>
 

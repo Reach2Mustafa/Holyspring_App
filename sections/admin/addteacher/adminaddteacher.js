@@ -132,6 +132,8 @@ const Adminaddteacher = ({ }) => {
             const addteacher = await AddTeacher(name, email, password, phone, selectedSubjects, selectedClasses, classteacher)
             if (addteacher.error) {
                 ToastAndroid.show(addteacher.error, ToastAndroid.SHORT);
+        setLoading(false)
+
                 return;
             }
             ToastAndroid.show('Added successfully!', ToastAndroid.SHORT);
