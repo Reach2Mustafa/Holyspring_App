@@ -18,6 +18,7 @@ import Remark from "../assets/icons/remark";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Updates from "expo-updates";
 import { useUser } from "../redux/userContext";
+import Devzel from "../assets/icons/devzel";
 const Menu = ({ toggleDrawer }) => {
   const navigation = useNavigation();
   const { state } = useUser();
@@ -487,6 +488,7 @@ const Menu = ({ toggleDrawer }) => {
             </Link>
           </View>
           <View className={`w-full`}>
+            
             <TouchableOpacity
               className={`rounded-md w-full justify-center border-[1px] py-2.5 pb-3.5 border-[#FC6C6C]`}
               onPress={() => {
@@ -508,6 +510,7 @@ const Menu = ({ toggleDrawer }) => {
                 </Text>
               </View>
             </TouchableOpacity>
+          
           </View>
         </View>
       )}
