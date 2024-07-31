@@ -129,7 +129,7 @@ const AddNotification = () => {
               style={{ fontFamily: "Matter500" }}
               className="text-white leading-none text-[14px] py-2.5 pb-[14px] font-medium"
             >
-              {loading ? <ActivityIndicator color={"#fff"} /> : "Add"}
+              {loading ? <ActivityIndicator color={"#fff"} /> : "Send"}
             </Text>
           </TouchableOpacity>
         </View>

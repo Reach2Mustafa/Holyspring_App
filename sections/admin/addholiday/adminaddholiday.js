@@ -16,6 +16,7 @@ import Assbtn from "../../../assets/icons/assbtn";
 import { useNavigation } from "expo-router";
 import Getattendancedatesadmin from "../../../api/getaatendancedatesadmin";
 import MarkHoliday from "../../../api/markholiday";
+import Holidaydate from "../../../components/holidaydate";
 
 const Adminaddholiday = ({}) => {
   const pagerRef = useRef(null);
@@ -24,43 +25,10 @@ const Adminaddholiday = ({}) => {
   const [attendence, setAttendence] = useState({});
   const [currentpage, setCurrentPage] = useState(0); // State to track the current page
   const { state } = useUser();
-  const [dateLoad, setdateLoad] = useState(false);
   const user = state.user;
   const navigation = useNavigation();
 
-  const [lastPress, setLastPress] = useState(0);
-  const DOUBLE_PRESS_DELAY = 300; // Double press interval in milliseconds
 
-  const toggleHoliday = async (val, targetDate) => {
-    const res = await MarkHoliday({ date: targetDate, isHoliday: val });
-    console.log(res, "rrrrrrrrrrrrrrrrr");
-    if (res?.error) {
-      ToastAndroid.show(res?.error, ToastAndroid.SHORT);
-      return;
-    }
-    const data = await Getattendancedatesadmin();
-    setAttendence(data);
-    setdateLoad(false);
-    ToastAndroid.show(res?.data, ToastAndroid.SHORT);
-  };
-
-  const handlePress = (value, date, index) => {
-    const now = Date.now();
-
-    if (now - lastPress < DOUBLE_PRESS_DELAY) {
-      setdateLoad(index);
-      console.log(date);
-      toggleHoliday(!value, date);
-    } else {
-      ToastAndroid.show(
-        !value
-          ? "Press one more time to mark it as holiday."
-          : "Press one more time to un-mark holiday.",
-        ToastAndroid.SHORT
-      );
-    }
-    setLastPress(now);
-  };
 
   useEffect(() => {
     const getData = async () => {
@@ -164,42 +132,7 @@ const Adminaddholiday = ({}) => {
                           }}
                         >
                           {attendence[month]?.map((entry, entryIndex) => (
-                            <TouchableOpacity
-                              onPress={() =>
-                                handlePress(entry.holiday, entry.date, index)
-                              }
-                              key={entryIndex}
-                              className="p-2"
-                              style={{
-                                width: "20%",
-                              }}
-                            >
-                              {dateLoad == entryIndex ? (
-                                <ActivityIndicator size={10} />
-                              ) : (
-                                <Text
-                                  className="border-[#EAEAEE]  border-[1px] py-3 rounded-lg  text-[15px]  text-center"
-                                  style={{
-                                    fontFamily: "Matter",
-                                    fontWeight: "bold",
-                                    fontSize: 16,
-                                    textDecorationLine: entry.holiday
-                                      ? "line-through"
-                                      : "",
-                                    color: entry.holiday ? "#fff" : "#737A82",
-                                    borderColor: entry.holiday
-                                      ? "#0470BC"
-                                      : "#EAEAEE",
-
-                                    backgroundColor: entry.holiday
-                                      ? "#0470BC"
-                                      : "#fff",
-                                  }}
-                                >
-                                  {entryIndex + 1}
-                                </Text>
-                              )}
-                            </TouchableOpacity>
+                           <Holidaydate entry={entry} index={index} entryIndex={entryIndex} setAttendence={setAttendence}/>
                           ))}
                         </View>
                       </View>
