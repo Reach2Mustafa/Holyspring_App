@@ -15,6 +15,7 @@ const MarkHoliday = async (requestData) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    console.log(error);
     return { error: error.response.data?.error || "Unexpected error occured" };
   }
 };
