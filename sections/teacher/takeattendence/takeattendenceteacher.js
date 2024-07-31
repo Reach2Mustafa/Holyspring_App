@@ -13,6 +13,7 @@ import getStudentsByClass from "../../../api/getStudentsByClass";
 import Uploadattendance from "../../../api/uploadattendance";
 import { router } from "expo-router";
 import getFormattedDate from "../../../utils/getFormattedDate";
+import formatDateAndDay from "../../../utils/formatDateAndDay";
 
 const Takeattendenceteacher = () => {
   const route = useRoute();
@@ -23,7 +24,7 @@ const Takeattendenceteacher = () => {
   const [attendance, setAttendance] = useState({});
   const [reload, setreload] = useState(false);
   const [btnloading, setbtnloading] = useState(false);
-  const [date1, setdate1] = useState(getFormattedDate());
+  const [date1, setdate1] = useState();
 
   useEffect(() => {
     const getAllStudents = async () => {
@@ -143,7 +144,7 @@ const Takeattendenceteacher = () => {
                 className="text-gray-600 text-base"
                 style={{ fontFamily: "Matter" }}
               >
-                {date1}
+                {date.slice(0, 10)}
               </Text>
             </View>
           </View>
