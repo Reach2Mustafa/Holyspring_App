@@ -14,6 +14,7 @@ import {
 import AddNoticeApi from "../../../api/addnotice";
 import getFormattedDate from "../../../utils/getFormattedDate";
 import { useNavigation } from "expo-router";
+import sendnotify from "../../../api/sendnotify";
 
 const AddNotification = () => {
   const [date, Setdate] = useState(getFormattedDate());
@@ -29,12 +30,12 @@ const AddNotification = () => {
       return;
     }
     setLoading(true)
-    const res = await AddNoticeApi({ title: title, description: description });
+    const res = await sendnotify({ title: title, description: description });
     if (res.error) {
       ToastAndroid.show(res.error, ToastAndroid.SHORT);
       return;
     }
-    ToastAndroid.show("Notice added successfully.", ToastAndroid.SHORT);
+    ToastAndroid.show("Notification sent successfully.", ToastAndroid.SHORT);
     navigation.navigate("admin/home");
     setTitle("");
     setDescription("");
@@ -43,72 +44,72 @@ const AddNotification = () => {
   return (
     <View className=" h-full flex flex-col justify-between ">
       <ScrollView>
-      <View className={`w-full sticky top-0  border-b border-gray-300`}>
-            <View className={`w-full border-b border-gray-300`}>
-              <View className={`p-6`}>
-                <Text
-                  style={{
-                    fontFamily: "Avant",
-                    fontFeatures: [{ salt: 1 }],
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                    fontSize: 20,
-                  }}
-                >
-                  Send Notification
-                </Text>
+        <View className={`w-full sticky top-0  border-b border-gray-300`}>
+          <View className={`w-full border-b border-gray-300`}>
+            <View className={`p-6`}>
+              <Text
+                style={{
+                  fontFamily: "Avant",
+                  fontFeatures: [{ salt: 1 }],
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              >
+                Send Notification
+              </Text>
 
-                <Text
-                  className={"text-gray-600 text-base"}
-                  style={{ fontFamily: "Matter" }}
-                >
-                  {date}
-                </Text>
-              </View>
+              <Text
+                className={"text-gray-600 text-base"}
+                style={{ fontFamily: "Matter" }}
+              >
+                {date}
+              </Text>
             </View>
           </View>
+        </View>
         <View className="p-6 grid gap-6 w-full">
-         
+
           <View style={styles.descriptionContainer}>
-              <Text
-                className=" pb-2"
-                style={{ fontSize: 16, fontFamily: "Matter500" }}
-              >
-                Title
-              </Text>
-              <TextInput
-                className="text-[#858585] px-3  border-[1px] border-[#EDEEF4] active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.4px] bg-white"
-                style={[
-                  { fontSize: 16, fontFamily: "Matter" }, // Set the font size explicitly
-                ]}
-                placeholder="Enter title"
-                value={title}
-                onChangeText={setTitle}
-                multiline
-              />
-            </View>
-            <View>
-              <Text
-                className="pb-4"
-                style={{ fontSize: 16, fontFamily: "Matter500" }}
-              >
-                Description
-              </Text>
-              <TextInput
-                className="text-[#858585] px-3 min-h-[300px] text-start border-[1px] border-[#EDEEF4] active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.4px] bg-white"
-                style={{
-                  fontSize: 16,
-                  fontFamily: "Matter",
-                  textAlignVertical: "top",
-                }}
-               placeholder="Description"
-                value={description}
-                onChangeText={setDescription}
-                multiline
-              />
-            </View>
-        
-         
+            <Text
+              className=" pb-2"
+              style={{ fontSize: 16, fontFamily: "Matter500" }}
+            >
+              Title
+            </Text>
+            <TextInput
+              className="text-[#858585] px-3  border-[1px] border-[#EDEEF4] active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl  pt-3.5 pb-[14.4px] bg-white"
+              style={[
+                { fontSize: 16, fontFamily: "Matter" }, // Set the font size explicitly
+              ]}
+              placeholder="Enter title"
+              value={title}
+              onChangeText={setTitle}
+              multiline
+            />
+          </View>
+          <View>
+            <Text
+              className="pb-4"
+              style={{ fontSize: 16, fontFamily: "Matter500" }}
+            >
+              Description
+            </Text>
+            <TextInput
+              className="text-[#858585] px-3 min-h-[300px] text-start border-[1px] border-[#EDEEF4] active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5 pb-[14.4px] bg-white"
+              style={{
+                fontSize: 16,
+                fontFamily: "Matter",
+                textAlignVertical: "top",
+              }}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+              multiline
+            />
+          </View>
+
+
         </View>
       </ScrollView>
       <View className="px-4 pb-4">
@@ -122,7 +123,7 @@ const AddNotification = () => {
             Send Notification
           </Text>
           <TouchableOpacity
-            onPress={ handleAddNotice}
+            onPress={handleAddNotice}
             className="rounded-full w-[80px] flex items-center bg-[#205FFF]"
           >
             <Text
