@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Animated, Easing, ToastAndroid } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Animated, Easing, ToastAndroid, ActivityIndicator } from 'react-native'
 import ArrowRight from '../../../assets/icons/arrowright';
 import Arrowdown from '../../../assets/icons/Arrowdown';
 import { useUser } from '../../../redux/userContext';
