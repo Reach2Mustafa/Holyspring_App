@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "324792349603",
+    "project_id": "holyspring-85888",
+    "storage_bucket": "holyspring-85888.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324792349603:android:7f044434885b1539bb6016",
+        "android_client_info": {
+          "package_name": "com.reach2mustafa.Holyspring"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwyRfMVTe1TtUR5O6S7aT49w-5gWzaRl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324792349603:android:032ccd89be97c3a9bb6016",
+        "android_client_info": {
+          "package_name": "com.reach2mustafa.holysring_frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwyRfMVTe1TtUR5O6S7aT49w-5gWzaRl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
